@@ -2,20 +2,19 @@
 <?php include "layouts/nave.php" ?>
 <?php include "app/models/Book.php" ?>
 
-<?php 
+<?php
 //plplplplplplp
 
 $bookObject = new Book;
-$books = $bookObject ->GetMostSellBooks();
+$books = $bookObject->GetMostSellBooks();
 
-
-foreach($books as $book){
-  
+// hazem
+foreach ($books as $book) {
 }
 ?>
 
 
-<?php foreach($books as $book){?>
+<?php foreach ($books as $book) { ?>
 
 
 <?php }
