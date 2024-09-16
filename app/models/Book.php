@@ -10,13 +10,14 @@ class Book  extends config implements operations
   private $image;
   private $description;
   private $price;
+  private $lang;
   private $offer;
   private $code;
   private $numberOfPages;
   private $recommended;
   private $topSelling;
   private $authorId;
-  private $subcategoryId;
+  private $category_id;
   private $publisherId;
 
   public function getId()
@@ -118,13 +119,25 @@ class Book  extends config implements operations
     $this->authorId = $authorId;
   }
 
-  public function getSubcategoryId()
+
+  /**
+   * Get the value of category_id
+   */
+  public function getCategory_id()
   {
-    return $this->subcategoryId;
+    return $this->category_id;
   }
-  public function setSubcategoryId($subcategoryId)
+
+  /**
+   * Set the value of category_id
+   *
+   * @return  self
+   */
+  public function setCategory_id($category_id)
   {
-    $this->subcategoryId = $subcategoryId;
+    $this->category_id = $category_id;
+
+    return $this;
   }
 
   public function getPublisherId()
@@ -154,5 +167,25 @@ class Book  extends config implements operations
     $query = "";
     $result = $this->conn->query($query);
     return $result->fetch_assoc();
+  }
+
+  /**
+   * Get the value of lang
+   */ 
+  public function getLang()
+  {
+    return $this->lang;
+  }
+
+  /**
+   * Set the value of lang
+   *
+   * @return  self
+   */ 
+  public function setLang($lang)
+  {
+    $this->lang = $lang;
+
+    return $this;
   }
 }
