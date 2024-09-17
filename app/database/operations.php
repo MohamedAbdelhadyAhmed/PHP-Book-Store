@@ -1,6 +1,6 @@
 <?php
-
-interface operations{
+interface operations
+{
     function create();
     function update();
     function read();

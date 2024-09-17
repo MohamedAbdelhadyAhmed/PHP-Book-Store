@@ -1,8 +1,5 @@
 <?php include "layouts/header.php" ?>
 <?php include "layouts/nave.php" ?>
-<?php include "app/models/Book.php" ?>
-<?php // hhh 
-?>
 
 <main>
   <section
@@ -13,7 +10,7 @@
         <h2>من نحن</h2>
       </div>
       <div class="page-top__breadcrumb">
-        <a class="text-gray" href="index.html">الرئيسية</a> /
+        <a class="text-primary text-decoration-none h5" href="index.php">الرئيسية</a> /
         <span class="text-gray">من نحن</span>
       </div>
     </div>

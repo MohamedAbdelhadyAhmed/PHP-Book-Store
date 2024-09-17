@@ -1,12 +1,9 @@
-<?php include "layouts/header.php";
-include "layouts/nave.php";
-include "app/models/Book.php";
-
-
-$bookObject = new Book;
-$books = $bookObject->GetMostSellBooks();
-
-
+<?php
+require_once "src/functions.php";
+require_once "layouts/header.php";
+require_once "layouts/nave.php";
+require_once "app/models/Book.php";
+$book = new Book();
 ?>
 
 <!-- Page Content Start -->
