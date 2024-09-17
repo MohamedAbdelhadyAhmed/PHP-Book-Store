@@ -1,7 +1,8 @@
 <?php
 // echo __DIR__.'/../database/config.php';
 // die();
-include_once __DIR__ . '../database/config.php';
+include_once __DIR__ . '/../database/config.php';
+include_once __DIR__ . '/../database/operations.php';
 // class Address  extends config implements operations
 class Book  extends config implements operations
 {
@@ -151,15 +152,37 @@ class Book  extends config implements operations
 
 
   //================================ Functions Here =====================================================
-  public  function create() {}
+  public  function create()
+  {
+
+    $sql = "
+    INSERT INTO books (title, price, offer, number_of_pages, author_id, category_id, publisher_id, description, image)
+    VALUES ('$this->title', '$this->price', '$this->offer', '$this->numberOfPages', '$this->authorId', '$this->category_id', '$this->publisherId', '$this->description', '$this->image')";
+
+    return $this->runDML($sql);
+  }
   public function update() {}
   public function read()
   {
-    // select all books 
+    // $sql  = "SELECT * FROM `books`";
+    $sql = "
+    SELECT 
+        books.*,
+        authors.name AS author_name, 
+        categories.name AS category_name,
+        publishers.name AS publisher_name
+    FROM 
+        books
+    JOIN 
+        authors ON books.author_id = authors.id
+    JOIN 
+        categories ON books.category_id = categories.id
+    JOIN 
+        publishers ON books.publisher_id = publishers.id ";
+
+    return $this->runDQL($sql);
   }
   public function delete() {}
-
-
 
   public function GetMostSellBooks()
   {
@@ -171,7 +194,7 @@ class Book  extends config implements operations
 
   /**
    * Get the value of lang
-   */ 
+   */
   public function getLang()
   {
     return $this->lang;
@@ -181,7 +204,7 @@ class Book  extends config implements operations
    * Set the value of lang
    *
    * @return  self
-   */ 
+   */
   public function setLang($lang)
   {
     $this->lang = $lang;

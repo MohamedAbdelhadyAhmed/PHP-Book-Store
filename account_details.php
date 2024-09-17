@@ -12,7 +12,7 @@
             <h2>حسابي</h2>
           </div>
           <div class="page-top__breadcrumb">
-            <a class="text-gray" href="index.html">الرئيسية</a> /
+            <a class="text-gray" href="index.php">الرئيسية</a> /
             <span class="text-gray">حسابي</span>
           </div>
         </div>
@@ -32,14 +32,14 @@
             <li class="profile__tab">
               <a
                 class="py-2 px-3 text-black text-decoration-none"
-                href="profile.html"
+                href="profile.php"
                 >لوحة التحكم</a
               >
             </li>
             <li class="profile__tab">
               <a
                 class="py-2 px-3 text-black text-decoration-none"
-                href="orders.html"
+                href="orders.php"
                 >الطلبات</a
               >
             </li>
@@ -47,14 +47,14 @@
             <li class="profile__tab active">
               <a
                 class="py-2 px-3 text-black text-decoration-none"
-                href="account_details.html"
+                href="account_details.php"
                 >تفاصيل الحساب</a
               >
             </li>
             <li class="profile__tab">
               <a
                 class="py-2 px-3 text-black text-decoration-none"
-                href="favourites.html"
+                href="favourites.php"
                 >المفضلة</a
               >
             </li>

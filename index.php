@@ -1,10 +1,12 @@
-<?php include "layouts/header.php";
+<?php
+
+include "layouts/header.php";
 include "layouts/nave.php";
 include "app/models/Book.php";
 
 
-$bookObject = new Book;
-$books = $bookObject->GetMostSellBooks();
+// $bookObject = new Book;
+// $books = $bookObject->GetMostSellBooks();
 
 
 ?>

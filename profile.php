@@ -12,7 +12,7 @@
             <h2>حسابي</h2>
           </div>
           <div class="page-top__breadcrumb">
-            <a class="text-gray" href="index.html">الرئيسية</a> /
+            <a class="text-gray" href="index.php">الرئيسية</a> /
             <span class="text-gray">حسابي</span>
           </div>
         </div>
@@ -28,16 +28,16 @@
           </div>
           <ul class="profile__tabs list-unstyled ps-3">
             <li class="profile__tab active">
-              <a class="py-2 px-3 text-black text-decoration-none" href="profile.html">لوحة التحكم</a>
+              <a class="py-2 px-3 text-black text-decoration-none" href="profile.php">لوحة التحكم</a>
             </li>
             <li class="profile__tab">
-              <a class="py-2 px-3 text-black text-decoration-none" href="orders.html">الطلبات</a>
+              <a class="py-2 px-3 text-black text-decoration-none" href="orders.php">الطلبات</a>
             </li>
             <li class="profile__tab">
-              <a class="py-2 px-3 text-black text-decoration-none" href="account_details.html">تفاصيل الحساب</a>
+              <a class="py-2 px-3 text-black text-decoration-none" href="account_details.php">تفاصيل الحساب</a>
             </li>
             <li class="profile__tab">
-              <a class="py-2 px-3 text-black text-decoration-none" href="favourites.html">المفضلة</a>
+              <a class="py-2 px-3 text-black text-decoration-none" href="favourites.php">المفضلة</a>
             </li>
             <li class="profile__tab">
               <a class="py-2 px-3 text-black text-decoration-none" href="">تسجيل الخروج</a>
@@ -54,10 +54,10 @@
 
             <p>
               من خلال لوحة تحكم الحساب الخاص بك، يمكنك استعراض
-              <a class="text-danger" href="orders.html">أحدث الطلبات</a>،
+              <a class="text-danger" href="orders.php">أحدث الطلبات</a>،
              والفواتير
               الخاصة بك، بالإضافة إلى
-              <a class="text-danger" href="account_details.html">تعديل كلمة المرور وتفاصيل حسابك</a>.
+              <a class="text-danger" href="account_details.php">تعديل كلمة المرور وتفاصيل حسابك</a>.
             </p>
           </div>
         </div>
