@@ -1,7 +1,8 @@
 <?php
 // echo __DIR__.'/../database/config.php';
 // die();
-include_once __DIR__ . '../database/config.php';
+include_once __DIR__ . '/../database/config.php';
+include_once __DIR__ . '/../database/operations.php';
 // class Address  extends config implements operations
 class Review  extends config implements operations
 {

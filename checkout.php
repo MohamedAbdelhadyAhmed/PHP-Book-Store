@@ -1,5 +1,6 @@
 <?php include "layouts/header.php" ?>
 <?php include "layouts/nave.php" ?>
+<?php include "app/models/Book.php" ?>
 
 <main>
   <section
@@ -10,7 +11,7 @@
         <h2>إتمام الطلب</h2>
       </div>
       <div class="page-top__breadcrumb">
-        <a class="text-primary text-decoration-none h5" href="index.php">الرئيسية</a> /
+        <a class="text-gray" href="index.php">الرئيسية</a> /
         <span class="text-gray">إتمام الطلب</span>
       </div>
     </div>

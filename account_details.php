@@ -1,5 +1,6 @@
 <?php include "layouts/header.php" ?>
 <?php include "layouts/nave.php" ?>
+<?php include "app/models/Book.php" ?>
 
 <main>
   <section
@@ -10,7 +11,7 @@
         <h2>حسابي</h2>
       </div>
       <div class="page-top__breadcrumb">
-        <a class="text-primary text-decoration-none h5" href="index.php">الرئيسية</a> /
+        <a class="text-gray" href="index.php">الرئيسية</a> /
         <span class="text-gray">حسابي</span>
       </div>
     </div>
@@ -29,23 +30,23 @@
         <li class="profile__tab">
           <a
             class="py-2 px-3 text-black text-decoration-none"
-            href="profile.html">لوحة التحكم</a>
+            href="profile.php">لوحة التحكم</a>
         </li>
         <li class="profile__tab">
           <a
             class="py-2 px-3 text-black text-decoration-none"
-            href="orders.html">الطلبات</a>
+            href="orders.php">الطلبات</a>
         </li>
 
         <li class="profile__tab active">
           <a
             class="py-2 px-3 text-black text-decoration-none"
-            href="account_details.html">تفاصيل الحساب</a>
+            href="account_details.php">تفاصيل الحساب</a>
         </li>
         <li class="profile__tab">
           <a
             class="py-2 px-3 text-black text-decoration-none"
-            href="favourites.html">المفضلة</a>
+            href="favourites.php">المفضلة</a>
         </li>
         <li class="profile__tab">
           <a class="py-2 px-3 text-black text-decoration-none" href="">تسجيل الخروج</a>

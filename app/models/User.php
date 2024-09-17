@@ -1,9 +1,8 @@
 <?php
 // echo __DIR__.'/../database/config.php';
 // die();
-include_once __DIR__ . '../database/config.php';
-//C:\xampp\htdocs\php-course\BookStore\app\database\config.php
-include_once __DIR__ . '../database/operations.php';
+include_once __DIR__ . '/../database/config.php';
+include_once __DIR__ . '/../database/operations.php';
 class User extends config implements operations
 {
 
