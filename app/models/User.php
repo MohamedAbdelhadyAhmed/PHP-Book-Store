@@ -16,8 +16,6 @@ class User extends config implements operations
     private $last_name;
     private $email;
     private $phone;
-    private $image;
-    private $image;
     private $password;
     private $status;
     private $createdAt;
