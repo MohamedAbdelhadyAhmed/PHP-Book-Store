@@ -1,14 +1,13 @@
 <?php
-// echo __DIR__.'/../database/config.php';
-// die();
-include_once __DIR__ . '../database/config.php';
-//C:\xampp\htdocs\php-course\BookStore\app\database\config.php
-include_once __DIR__ . '../database/operations.php';
+
+include_once __DIR__ . '/../database/config.php';
+include_once __DIR__ . '/../database/operations.php';
+
 class User extends config implements operations
 {
 
     private $id;
-    private $name;
+    private $name; 
     private $email;
     private $phone;
     private $password;
@@ -88,6 +87,8 @@ class User extends config implements operations
         $this->updatedAt = $updatedAt;
     }
 
+  
+
     //================================ Functions Here =====================================================
     public  function create() {
 
@@ -99,5 +100,30 @@ class User extends config implements operations
     public function update() {}
     public function read() {}
     public function delete() {}
+
+    
+
+    public function addUser($firstname , $lastname , $email ,$password ){
+      
+      $sql = "INSERT INTO `users` ( first_name , last_name , email , `password`) 
+        VALUES ('$firstname' , '$lastname' ,'$email' , '$password')";
+        mysqli_query($this->conn, $sql);
+
+    }
+
+    //check username already exists.
+    private function nameExists($firstname,$lastname){
+      $sql = "SELECT * FROM users WHERE first_name = '$firstname' and last_name = '$lastname'  ";
+      $result = mysqli_query($this->conn, $sql);
+      return mysqli_num_rows($result) > 0;
+    }
+
+    //check email already exists.
+    private function emailExists(){
+      $sql = "SELECT * FROM users WHERE email = '$this->email'";
+      $result = mysqli_query($this->conn, $sql);
+      return mysqli_num_rows($result) > 0;
+    }
+
 
 }
