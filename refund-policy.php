@@ -12,7 +12,7 @@
             <h2>سياسة الاستبدال والاسترجاع</h2>
           </div>
           <div class="page-top__breadcrumb">
-            <a class="text-gray" href="index.html">الرئيسية</a> /
+            <a class="text-gray" href="index.php">الرئيسية</a> /
             <span class="text-gray">سياسة الاستبدال والاسترجاع</span>
           </div>
         </div>

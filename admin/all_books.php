@@ -1,7 +1,22 @@
 <?php
+session_start();
+include "../app/middleware/auth.php";
 include_once "layouts/header.php";
 include_once "layouts/nave.php";
 include_once "layouts/sidebar.php";
+include "../app/models/Book.php";
+ 
+
+$bookObject = new Book;
+$result = $bookObject->read();
+if ($result) {
+  $books = $result->fetch_all(MYSQLI_ASSOC);
+} else {
+  $books = [];
+}
+
+// print_r( $books );die;
+//author_name  category_name  publisher_name
 ?>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -29,48 +44,42 @@ include_once "layouts/sidebar.php";
             <div class="card-header">
               <h3 class="card-title">All Books</h3>
             </div>
-            <!-- /.card-header -->
+            <!-- /.card-header   -->
             <div class="card-body">
+              <?php
+              if (isset($_SESSION["book_deleted"])) {
+                echo "<div class='alert alert-danger'>" .  $_SESSION["book_deleted"] . "</div>";
+              } ?>
+
               <table class="table table-bordered">
                 <thead>
                   <tr>
                     <th style="width: 10px">#</th>
                     <th>Title</th>
-                    <th>Author</th>
                     <th>Price</th>
+                    <th>Author</th>
                     <th>Category</th>
                     <th>Publisher</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>The Great Gatsby</td>
-                    <td>F. Scott Fitzgerald</td>
-                    <td>$10.99</td>
-                    <td>Fiction</td>
-                    <td>Scribner</td>
-                    <td>
-                      <a href="edit_book.php?id=1" class="btn btn-primary btn-sm">Edit</a>
-                      <a href="../app/controller/BackEnd/Book/delete_book.php?id=1" class="btn btn-danger btn-sm">Delete</a>
-                    </td>
+                  <?php foreach ($books as $book) { ?>
+                    <tr>
+                      <td> <?= $book['id'] ?></td>
+                      <td> <?= $book['title'] ?></td>
+                      <td> <?= $book['price'] ?> </td>
+                      <td> <?= $book['author_name'] ?></td>
+                      <td> <?= $book['category_name'] ?></td>
+                      <td> <?= $book['publisher_name'] ?></td>
+                      <td>
+                        <a href="edit_book.php?id=<?= $book['id'] ?>" class="btn btn-primary btn-sm">Edit</a>
+                        <a href="../app/controller/BackEnd/Book/delete_book.php?id=<?= $book['id'] ?>" class="btn btn-danger btn-sm">Delete</a>
+                      </td>
+                    </tr>
+                  <?php  } ?>
 
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>To Kill a Mockingbird</td>
-                    <td>Harper Lee</td>
-                    <td>$8.99</td>
-                    <td>Fiction</td>
-                    <td>J.B. Lippincott & Co.</td>
-                    <td>
-                      <a href="edit_book.php?id=1" class="btn btn-primary btn-sm">Edit</a>
-                      <a href="delete_book.php?id=1" class="btn btn-danger btn-sm">Delete</a>
-                    </td>
 
-                  </tr>
-               
                   <!-- Add more rows for other books as needed -->
                 </tbody>
               </table>
@@ -96,4 +105,6 @@ include_once "layouts/sidebar.php";
     </div>
   </section>
 </div>
-<?php include_once "layouts/footer.php"; ?>
+<?php
+unset($_SESSION["book_deleted"]);
+include_once "layouts/footer.php"; ?>

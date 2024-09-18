@@ -1,28 +1,15 @@
-<?php include "layouts/header.php" ?>
-<?php include "layouts/nave.php" ?>
-<?php include "app/models/Book.php" ?>
+<?php
 
-<?php 
-//plplplplplplp
-
-$bookObject = new Book;
-$books = $bookObject ->GetMostSellBooks();
+include "layouts/header.php";
+include "layouts/nave.php";
+include "app/models/Book.php";
 
 
-// shehataaaaaaaaaaaaaaa
+// $bookObject = new Book;
+// $books = $bookObject->GetMostSellBooks();
 
-foreach($books as $book){
-  
-}
+
 ?>
-
-
-<?php foreach($books as $book){?>
-
-
-<?php }
-?>
-
 
 <!-- Page Content Start -->
 <main class="pt-4">

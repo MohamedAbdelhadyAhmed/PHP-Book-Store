@@ -1,15 +1,20 @@
 <?php
 
+
+
+// echo _DIR_.'/../database/config.php';
+// die();
 include_once __DIR__ . '/../database/config.php';
 include_once __DIR__ . '/../database/operations.php';
-
 class User extends config implements operations
 {
 
     private $id;
-    private $name; 
+    private $first_name;
+    private $last_name;
     private $email;
     private $phone;
+    private $image;
     private $password;
     private $status;
     private $createdAt;
@@ -24,14 +29,7 @@ class User extends config implements operations
         $this->id = $id;
     }
 
-    public function getName()
-    {
-        return $this->name;
-    }
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
+
 
     public function getEmail()
     {
@@ -57,7 +55,7 @@ class User extends config implements operations
     }
     public function setPassword($password)
     {
-        $this->password = $password;
+        $this->password = sha1($password);
     }
 
     public function getStatus()
@@ -87,43 +85,80 @@ class User extends config implements operations
         $this->updatedAt = $updatedAt;
     }
 
-  
+    /**
+     * Get the value of first_name
+     */
+    public function getFirst_name()
+    {
+        return $this->first_name;
+    }
+
+    /**
+     * Set the value of first_name
+     *
+     * @return  self
+     */
+    public function setFirst_name($first_name)
+    {
+        $this->first_name = $first_name;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of last_name
+     */
+    public function getLast_name()
+    {
+        return $this->last_name;
+    }
+
+    /**
+     * Set the value of last_name
+     *
+     * @return  self
+     */
+    public function setLast_name($last_name)
+    {
+        $this->last_name = $last_name;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set the value of image
+     *
+     * @return  self
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
 
     //================================ Functions Here =====================================================
-    public  function create() {
-
-
-
-
-        
+    public function create()
+    {
+        $query = "INSERT INTO `users`(first_name , last_name , email , `password`) VALUES  
+        ('$this->first_name','$this->last_name','$this->email', '$this->password')";
+        return $this->runDML($query);
+    }
+    public function login()
+    {
+        $query = "SELECT * FROM users WHERE email = '$this->email' AND password = '$this->password'";
+        return $this->runDQL($query);
     }
     public function update() {}
     public function read() {}
     public function delete() {}
-
-    
-
-    public function addUser($firstname , $lastname , $email ,$password ){
-      
-      $sql = "INSERT INTO `users` ( first_name , last_name , email , `password`) 
-        VALUES ('$firstname' , '$lastname' ,'$email' , '$password')";
-        mysqli_query($this->conn, $sql);
-
-    }
-
-    //check username already exists.
-    private function nameExists($firstname,$lastname){
-      $sql = "SELECT * FROM users WHERE first_name = '$firstname' and last_name = '$lastname'  ";
-      $result = mysqli_query($this->conn, $sql);
-      return mysqli_num_rows($result) > 0;
-    }
-
-    //check email already exists.
-    private function emailExists(){
-      $sql = "SELECT * FROM users WHERE email = '$this->email'";
-      $result = mysqli_query($this->conn, $sql);
-      return mysqli_num_rows($result) > 0;
-    }
-
 
 }

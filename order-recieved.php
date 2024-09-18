@@ -12,7 +12,7 @@
             <h2>حسابي</h2>
           </div>
           <div class="page-top__breadcrumb">
-            <a class="text-gray" href="index.html">الرئيسية</a> /
+            <a class="text-gray" href="index.php">الرئيسية</a> /
             <span class="text-gray">حسابي</span>
           </div>
         </div>

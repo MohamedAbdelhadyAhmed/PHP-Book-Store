@@ -2,8 +2,8 @@
 session_start();
 ?>
 <?php include "layouts/header.php" ?>
-<?php include "layouts/nave.php" ?> 
-<?php //include "./app/controller/BackEnd/Auth/register.php" ?>
+<?php include "layouts/nave.php" ?>
+
 
 <main>
   <div
@@ -32,12 +32,19 @@ session_start();
           حساب جديد
         </div>
       </div>
+
       <!-- login -->
       <div class="account__login w-100">
-        <form class="mb-5">
+        <form class="mb-5" action="./app/controller/FrontEnd/Auth/login.php" method="POST">
+        <?php
+          // if (isset($_SESSION['login_user']['email'])) {
+          //   echo "<div class='alert alert-danger'>" . $_SESSION['login_user']['email'] . "</div>";
+          // }
+          ?>
           <div class="input-group rounded-1 mb-3">
             <input
               type="text"
+              name="email"
               class="form-control p-3"
               placeholder="البريد الالكتروني"
               aria-label="Email"
@@ -48,9 +55,16 @@ session_start();
               <i class="fa-solid fa-envelope"></i>
             </span>
           </div>
+
+          <?php
+          // if (isset($_SESSION['login_user']['password'])) {
+          //   echo "<div class='alert alert-danger'>" . $_SESSION['login_user']['password'] . "</div>";
+          // }
+          ?>
           <div class="input-group rounded-1 mb-3">
             <input
               type="password"
+              name="password"
               class="form-control p-3"
               placeholder="كلمة السر"
               aria-label="Password"
@@ -80,8 +94,13 @@ session_start();
       <!-- register -->
       <div class="account__register w-100">
         <form class="mb-5" action="./app/controller/FrontEnd/Auth/register.php" method="POST">
-          
-          <!-- username -->
+
+          <?php
+          if (isset($_SESSION['create_user']['firstname'])) {
+            echo "<div class='alert alert-danger'>" . $_SESSION['create_user']['firstname'] . "</div>";
+          }
+          ?>
+          <!-- firstname -->
           <div class="input-group rounded-1 mb-3">
             <input
               type="text"
@@ -97,6 +116,11 @@ session_start();
             </span>
           </div>
 
+          <?php
+          if (isset($_SESSION['create_user']['lastname'])) {
+            echo "<div class='alert alert-danger'>" . $_SESSION['create_user']['lastname'] . "</div>";
+          }
+          ?>
           <div class="input-group rounded-1 mb-3">
             <input
               type="text"
@@ -111,6 +135,12 @@ session_start();
               <i class="fa-solid fa-user"></i>
             </span>
           </div>
+
+          <?php
+          if (isset($_SESSION['create_user']['email'])) {
+            echo "<div class='alert alert-danger'>" . $_SESSION['create_user']['email'] . "</div>";
+          }
+          ?>
 
           <!-- email -->
           <div class="input-group rounded-1 mb-3">
@@ -128,6 +158,12 @@ session_start();
             </span>
           </div>
 
+          <?php
+          if (isset($_SESSION['create_user']['phone'])) {
+            echo "<div class='alert alert-danger'>" . $_SESSION['create_user']['phone'] . "</div>";
+          }
+          ?>
+
           <!-- phone -->
           <div class="input-group rounded-1 mb-3">
             <input
@@ -143,6 +179,12 @@ session_start();
               <i class="fa-solid fa-user"></i>
             </span>
           </div>
+
+          <?php
+          if (isset($_SESSION['create_user']['password'])) {
+            echo "<div class='alert alert-danger'>" . $_SESSION['create_user']['password'] . "</div>";
+          }
+          ?>
 
           <!-- password -->
           <div class="input-group rounded-1 mb-3">
@@ -160,11 +202,32 @@ session_start();
             </span>
           </div>
 
+          <?php
+          if (isset($_SESSION['create_user']['password_confirmation'])) {
+            echo "<div class='alert alert-danger'>" . $_SESSION['create_user']['password_confirmation'] . "</div>";
+          }
+          ?>
+
+          <div class="input-group rounded-1 mb-3">
+            <input
+              type="password"
+              name="password_confirmation"
+              class="form-control p-3"
+              placeholder=" تاكيد كلمة السر"
+              aria-label="Password"
+              aria-describedby="basic-addon1" />
+            <span
+              class="input-group-text login__input-icon"
+              id="basic-addon1">
+              <i class="fa-solid fa-key"></i>
+            </span>
+          </div>
+
           <button
             class="text-center fs-6 py-2 w-100 bg-black text-white border-0 rounded-1">
             حساب جديد
           </button>
-          <?php echo $_SESSION['user']['success'] ?? " "?>
+          <?php echo $_SESSION['user']['success'] ?? " " ?>
 
         </form>
       </div>
@@ -202,6 +265,7 @@ session_start();
 
 
 <?php
-unset($_SESSION['user']['success']);
-include "layouts/footer.php" 
+unset($_SESSION['create_user']);
+// unset($_SESSION['login_user']);
+include "layouts/footer.php"
 ?>

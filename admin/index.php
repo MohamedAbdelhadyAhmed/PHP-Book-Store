@@ -1,7 +1,11 @@
 <?php
+session_start();
+include "../app/middleware/auth.php";
 include_once "layouts/header.php";
 include_once "layouts/nave.php";
 include_once "layouts/sidebar.php";
+
+
  ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">

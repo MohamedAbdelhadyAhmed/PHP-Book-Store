@@ -1,7 +1,41 @@
 <?php
+ 
+session_start();
+include "../app/middleware/auth.php";
 include_once "layouts/header.php";
 include_once "layouts/nave.php";
 include_once "layouts/sidebar.php";
+include "../app/models/Category.php";
+include "../app/models/Author.php";
+include "../app/models/Publisher.php";
+ 
+
+$CategoriesObject = new Category;
+$result = $CategoriesObject->read();
+if ($result) {
+  $categories = $result->fetch_all(MYSQLI_ASSOC);
+} else {
+  $categories = [];
+}
+
+$publishersObject = new Publisher;
+$result = $publishersObject->read();
+if ($result) {
+  $publishers = $result->fetch_all(MYSQLI_ASSOC);
+} else {
+  $publishers = [];
+}
+
+$authorsObject = new Author;
+$result = $authorsObject->read();
+if ($result) {
+  $authors = $result->fetch_all(MYSQLI_ASSOC);
+} else {
+  $authors = [];
+}
+
+
+
 ?>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -32,45 +66,24 @@ include_once "layouts/sidebar.php";
             <div class="card-header">
               <h3 class="card-title">Add New Book</h3>
             </div>
-            <!-- /.card-header -->
-            <!-- form start -->
-            <!-- <form>
-              <div class="card-body">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Email address</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Password</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputFile">File input</label>
-                  <div class="input-group">
-                    <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="exampleInputFile">
-                      <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                    </div>
-                    <div class="input-group-append">
-                      <span class="input-group-text">Upload</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                  <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                </div>
-              </div>
 
-              <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </div>
-            </form> -->
+
+            <?php
+
+            if (isset($_SESSION["book_added"])) {
+              echo "<div class='alert alert alert-success'>" .  $_SESSION["book_added"] . "</div>";
+            }
+            ?>
             <form action="../app/controller/BackEnd/Book/add_book.php" method="post" enctype="multipart/form-data">
               <div class="card-body">
                 <div class="form-group">
                   <label for="title">Title</label>
                   <input type="text" class="form-control" id="title" name="title" placeholder="Enter title">
+                  <?php
+                  if (isset($_SESSION['add_book']['title'])) {
+                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['title'] . "</div>";
+                  }
+                  ?>
                 </div>
 
 
@@ -78,17 +91,32 @@ include_once "layouts/sidebar.php";
                 <div class="form-group">
                   <label for="price">Price</label>
                   <input type="number" class="form-control" id="price" name="price" placeholder="Enter price">
+                  <?php
+                  if (isset($_SESSION['add_book']['price'])) {
+                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['price'] . "</div>";
+                  }
+                  ?>
                 </div>
 
                 <div class="form-group">
                   <label for="offer">Offer</label>
                   <input type="text" class="form-control" id="offer" name="offer" placeholder="Enter offer">
+                  <?php
+                  if (isset($_SESSION['add_book']['offer'])) {
+                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['offer'] . "</div>";
+                  }
+                  ?>
                 </div>
 
 
                 <div class="form-group">
                   <label for="numberOfPages">Number of Pages</label>
                   <input type="number" class="form-control" id="numberOfPages" name="numberOfPages" placeholder="Enter number of pages">
+                  <?php
+                  if (isset($_SESSION['add_book']['numberOfPages'])) {
+                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['numberOfPages'] . "</div>";
+                  }
+                  ?>
                 </div>
 
 
@@ -98,35 +126,74 @@ include_once "layouts/sidebar.php";
                   <label for="authorId">Author</label>
                   <select class="form-control" id="authorId" name="authorId">
                     <!-- Add options dynamically from the database or server-side -->
-                    <option value="1">Author 1</option>
-                    <option value="2">Author 2</option>
-                    <option value="3">Author 3</option>
+                    <option value="">Chose</option>
+
+                    <?php if (isset($authors)) {
+                      foreach ($authors as  $author) { ?>
+                        <option value="<?= $author['id'] ?>"> <?= $author['name'] ?></option>
+
+                    <?php   }
+                    }
+                    ?>
+
                   </select>
+                  <?php
+                  if (isset($_SESSION['add_book']['authorId'])) {
+                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['authorId'] . "</div>";
+                  }
+                  ?>
                 </div>
 
-                <div class="form-group">
-                  <label for="subcategoryId">Subcategory</label>
-                  <select class="form-control" id="subcategoryId" name="subcategoryId">
+                <div class="form-group"> 
+                  <label for="subcategoryId">category</label>
+                  <select class="form-control" id="subcategoryId" name="categoryId">
                     <!-- Add options dynamically from the database or server-side -->
-                    <option value="1">Subcategory 1</option>
-                    <option value="2">Subcategory 2</option>
-                    <option value="3">Subcategory 3</option>
+                    <option value="">Chose</option>
+                    <?php if (isset($categories)) {
+                      foreach ($categories as  $category) { ?>
+                        <option value="<?= $category['id'] ?>"> <?= $category['name'] ?></option>
+
+                    <?php   }
+                    }
+                    ?>
+
                   </select>
+                  <?php
+                  if (isset($_SESSION['add_book']['categoryId'])) {
+                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['categoryId'] . "</div>";
+                  }
+                  ?>
                 </div>
 
                 <div class="form-group">
                   <label for="publisherId">Publisher </label>
                   <select class="form-control" id="publisherId" name="publisherId">
                     <!-- Add options dynamically from the database or server-side -->
-                    <option value="1">Publisher 1</option>
-                    <option value="2">Publisher 2</option>
-                    <option value="3">Publisher 3</option>
+                    <option value="">Chose</option>
+
+                    <?php if (isset($publishers)) {
+                      foreach ($publishers as  $publisher) { ?>
+                        <option value="<?= $publisher['id'] ?>"> <?= $publisher['name'] ?></option>
+
+                    <?php   }
+                    }
+                    ?>
                   </select>
+                  <?php
+                  if (isset($_SESSION['add_book']['publisherId'])) {
+                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['publisherId'] . "</div>";
+                  }
+                  ?>
                 </div>
 
                 <div class="form-group">
                   <label for="description">Description</label>
                   <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description"></textarea>
+                  <?php
+                  if (isset($_SESSION['add_book']['description'])) {
+                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['description'] . "</div>";
+                  }
+                  ?>
                 </div>
 
                 <div class="form-group">
@@ -140,6 +207,11 @@ include_once "layouts/sidebar.php";
                       <span class="input-group-text">Upload</span>
                     </div>
                   </div>
+                  <?php
+                  if (isset($_SESSION['add_book']['image'])) {
+                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['image'] . "</div>";
+                  }
+                  ?>
                 </div>
 
               </div>
@@ -154,6 +226,12 @@ include_once "layouts/sidebar.php";
 
           </div>
           <!-- /.card -->
+          <?php
+          // if (isset($_SESSION['add_book'])) {
+          //   print_r($_SESSION['add_book']);
+          //   die;
+          // } 
+          ?>
 
 
         </div>
@@ -167,4 +245,7 @@ include_once "layouts/sidebar.php";
   </section>
   <!-- /.content -->
 </div>
-<?php include_once "layouts/footer.php"; ?>
+<?php
+unset($_SESSION['add_book']);
+unset($_SESSION['book_added']);
+include_once "layouts/footer.php"; ?>

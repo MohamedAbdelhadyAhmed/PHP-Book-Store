@@ -1,7 +1,8 @@
 <?php
 // echo __DIR__.'/../database/config.php';
 // die();
-include_once __DIR__ . '../database/config.php';
+include_once __DIR__ . '/../database/config.php';
+include_once __DIR__ . '/../database/operations.php';
 // class Address  extends config implements operations
 class Book  extends config implements operations
 {
@@ -10,13 +11,14 @@ class Book  extends config implements operations
   private $image;
   private $description;
   private $price;
+  private $lang;
   private $offer;
   private $code;
   private $numberOfPages;
   private $recommended;
   private $topSelling;
   private $authorId;
-  private $subcategoryId;
+  private $category_id;
   private $publisherId;
 
   public function getId()
@@ -118,13 +120,25 @@ class Book  extends config implements operations
     $this->authorId = $authorId;
   }
 
-  public function getSubcategoryId()
+
+  /**
+   * Get the value of category_id
+   */
+  public function getCategory_id()
   {
-    return $this->subcategoryId;
+    return $this->category_id;
   }
-  public function setSubcategoryId($subcategoryId)
+
+  /**
+   * Set the value of category_id
+   *
+   * @return  self
+   */
+  public function setCategory_id($category_id)
   {
-    $this->subcategoryId = $subcategoryId;
+    $this->category_id = $category_id;
+
+    return $this;
   }
 
   public function getPublisherId()
@@ -138,15 +152,41 @@ class Book  extends config implements operations
 
 
   //================================ Functions Here =====================================================
-  public  function create() {}
+  public  function create()
+  {
+
+    $sql = "
+    INSERT INTO books (title, price, offer, number_of_pages, author_id, category_id, publisher_id, description, image)
+    VALUES ('$this->title', '$this->price', '$this->offer', '$this->numberOfPages', '$this->authorId', '$this->category_id', '$this->publisherId', '$this->description', '$this->image')";
+
+    return $this->runDML($sql);
+  }
   public function update() {}
   public function read()
   {
-    // select all books 
+    // $sql  = "SELECT * FROM `books`";
+    $sql = "
+    SELECT 
+        books.*,
+        authors.name AS author_name, 
+        categories.name AS category_name,
+        publishers.name AS publisher_name
+    FROM 
+        books
+    JOIN 
+        authors ON books.author_id = authors.id
+    JOIN 
+        categories ON books.category_id = categories.id
+    JOIN 
+        publishers ON books.publisher_id = publishers.id ";
+
+    return $this->runDQL($sql);
   }
-  public function delete() {}
-
-
+  public function delete()
+  {
+    $sql  = "DELETE FROM `books` WHERE `id`='$this->id'";
+    return $this->runDML($sql);
+  }
 
   public function GetMostSellBooks()
   {
@@ -154,5 +194,25 @@ class Book  extends config implements operations
     $query = "";
     $result = $this->conn->query($query);
     return $result->fetch_assoc();
+  }
+
+  /**
+   * Get the value of lang
+   */
+  public function getLang()
+  {
+    return $this->lang;
+  }
+
+  /**
+   * Set the value of lang
+   *
+   * @return  self
+   */
+  public function setLang($lang)
+  {
+    $this->lang = $lang;
+
+    return $this;
   }
 }
