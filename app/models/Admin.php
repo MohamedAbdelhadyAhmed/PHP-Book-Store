@@ -80,6 +80,7 @@ class Admin  extends config implements operations
     public function create()
     {
         $query = "INSERT INTO `admins`(`name`, `email`, `password`) VALUES  ('$this->name','$this->email', '$this->password')";
+       
         return $this->runDML($query);
     }
     public function read()

@@ -34,13 +34,10 @@ if ($_POST) {
         die;
     } else {
 
-         
-
         // store new admin ;
         $adminObject = new Admin;
         $adminObject->setEmail($_POST['email']);
         $adminObject->setPassword($_POST['password']);
-
         $result =  $adminObject->login();
         if ($result) {
             // print_r($result );die;

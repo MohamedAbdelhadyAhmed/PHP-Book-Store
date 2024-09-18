@@ -6,7 +6,7 @@ include_once __DIR__ . "/../../../models/Admin.php";
 include_once __DIR__ . "/../../../requests/Validation.php";
 // echo  __DIR__."/../../../../publice/book_image"; die;
 
-if ($_POST) {
+if ($_POST){
     // Validation 
     $create_admin_errors = [];
 
@@ -41,6 +41,7 @@ if ($_POST) {
 
     $email_unique = $admin_valid->unique('admins', 'email', $_POST['email']);
     // print_r($email_unique );die;
+
     if (!empty($create_admin_errors)) {
         $_SESSION['create_admin'] = $create_admin_errors;
         header("Location:../../../../admin/register.php");
@@ -58,8 +59,8 @@ if ($_POST) {
         $adminObject->setName($_POST['name']);
         $adminObject->setEmail($_POST['email']);
         $adminObject->setPassword($_POST['password']);
-
         $result =  $adminObject->create();
+        
         if ($result) {
             $_SESSION["admin_added"] = "admin Register Successfully";
             header("Location:../../../../admin/register.php");
