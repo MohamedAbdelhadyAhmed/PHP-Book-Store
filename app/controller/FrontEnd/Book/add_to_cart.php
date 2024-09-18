@@ -7,7 +7,11 @@ require_once __DIR__ . "/../../../models/Cart.php";
 
 $bookId = ($_POST['book-id'] ?? $_GET['id']);
 $quantity = ($_POST['quantity'] ?? 1);
-$page = $_POST['page'];
+if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+} else {
+    $page = $_POST['page'];
+}
 $cart = new Cart();
 $cartId = $cart->checkofCart($bookId, ($_SESSION['user']['id'] ?? 1), $quantity);
 $_SESSION['cart']['add'] = "added to cart successfully";

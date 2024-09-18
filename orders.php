@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "layouts/header.php";
 include "layouts/nave.php";
 include "app/models/Order.php";
