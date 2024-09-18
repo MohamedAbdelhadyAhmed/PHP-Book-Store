@@ -1,10 +1,12 @@
 <?php
 session_start();
+include "../app/middleware/auth.php";
 
 include_once "layouts/header.php";
 include_once "layouts/nave.php";
 include_once "layouts/sidebar.php";
 include "../app/models/Category.php";
+ 
 
 //  print_r($_GET);die;
 if (isset($_GET['id'])) {

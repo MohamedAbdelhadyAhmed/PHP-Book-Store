@@ -1,10 +1,11 @@
 <?php
 session_start();
+include "../app/middleware/auth.php";
 include_once "layouts/header.php";
 include_once "layouts/nave.php";
 include_once "layouts/sidebar.php";
 include "../app/models/Author.php";
-
+ 
 $authorsObject = new Author;
 $result = $authorsObject->read();
 if ($result ) {
@@ -72,7 +73,7 @@ if (isset($_SESSION["delete"])) {
                       <td> <?= $author['name'] ?></td>
                       <td> <?= $author['description'] ?></td>
                       <td>
-                        <a href="edit_author.php?id=<?= $author['id'] ?>" class="btn btn-primary btn-sm">Edit</a>
+                        <!-- <a href="edit_author.php?id=<?//= $author['id'] ?>" class="btn btn-primary btn-sm">Edit</a> -->
                         <a href="../app/controller/BackEnd/author/delete_author.php?id=<?= $author['id'] ?>" class="btn btn-danger btn-sm">Delete</a>
                       </td>
                     </tr>

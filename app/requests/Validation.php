@@ -15,18 +15,18 @@ class Validation{
 
   
 
-    // public function unique($table) 
-    // {
-    //     $query = "SELECT * FROM `$table` WHERE `$this->name` = '$this->value'";
+    public function unique($table ,$column , $value) 
+    {
+        $query = "SELECT * FROM `$table` WHERE `$column` = '$value'";
         
-    //     $config = new config;
-    //     $result = $config->runDQL($query);
-    //     return (empty($result)) ? "" : "this $this->name is already exists";
-    // }
+        $config = new config;
+        $result = $config->runDQL($query);
+        return (empty($result)) ? "" : "this $column is already exists";
+    }
 
-    // public function confirmed($valueConfirmation)
-    // {
-    //     return ($this->value == $valueConfirmation) ? "" : "$this->name Not Confirmed";
-    // }
+    public function confirmed($valueConfirmation , $value)
+    {
+        return ($value == $valueConfirmation) ? "" : "Password Not Confirmed";
+    }
 }
 

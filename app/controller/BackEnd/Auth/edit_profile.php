@@ -1,11 +1,10 @@
 
 
 <?php
-//  print_r($_POST);die;
+// print_r($_POST);die;
 session_start();
 include_once __DIR__ . "/../../../models/Admin.php";
 include_once __DIR__ . "/../../../requests/Validation.php";
-// echo  __DIR__."/../../../../publice/book_image"; die;
 
 if ($_POST) {
     // Validation 
@@ -21,35 +20,34 @@ if ($_POST) {
 
     $admin_valid = new Validation();
 
+    $name = $admin_valid->required("name", $_POST['name']);
+    check($name, 'name');
     $email = $admin_valid->required("email", $_POST['email']);
     check($email, 'email');
 
 
-    $password = $admin_valid->required("password", $_POST['password']);
-    check($password, 'password');
+
     // print_r($email_unique );die;
     if (!empty($create_admin_errors)) {
         $_SESSION['login_admin'] = $create_admin_errors;
-        header("Location:../../../../admin/login.php");
+        header("Location:../../../../admin/profile.php");
         die;
     } else {
-
-         
-
-        // store new admin ;
+        // edit  admin ;
         $adminObject = new Admin;
+        $adminObject->setId($_POST['id']);
+        $adminObject->setName($_POST['name']);
         $adminObject->setEmail($_POST['email']);
-        $adminObject->setPassword($_POST['password']);
-
-        $result =  $adminObject->login();
+        $result =  $adminObject->update();
         if ($result) {
-            // print_r($result );die;
-            $admin = $result->fetch_object();
-            $_SESSION["admin"] = $admin ;
-            header("Location:../../../../admin/login.php");
+            $new_admin = $adminObject->read();
+            $admin = $new_admin->fetch_object();
+            $_SESSION["admin"] = $admin;
+            $_SESSION["admin_profile_updated"] = "Admin's Date Updated Successfully ";
+            header("Location:../../../../admin/profile.php");
         } else {
-            $_SESSION["admin_added"] = "Somthing Went Wrong Please Try Again";
-            header("Location:../../../../admin/login.php");
+            $_SESSION["admin_profile_updated"] = "Somthing Went Wrong Please Try Again";
+            header("Location:../../../../admin/profile.php");
         }
     }
 }

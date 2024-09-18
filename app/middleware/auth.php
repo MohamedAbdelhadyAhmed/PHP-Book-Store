@@ -1,5 +1,5 @@
 <?php
-// allow authenticated users and prevent guests
-if(empty($_SESSION['user'])){
+if (!isset($_SESSION['admin'])){
     header('location:login.php');die;
 }
+?>

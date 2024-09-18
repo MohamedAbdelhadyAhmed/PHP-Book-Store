@@ -4,6 +4,8 @@ session_start();
 include_once "layouts/header.php";
 include_once "layouts/nave.php";
 include_once "layouts/sidebar.php";
+include "../app/middleware/auth.php";
+
 ?>
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->

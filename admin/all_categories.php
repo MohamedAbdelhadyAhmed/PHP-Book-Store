@@ -1,8 +1,11 @@
 <?php
+session_start();
+include "../app/middleware/auth.php";
 include_once "layouts/header.php";
 include_once "layouts/nave.php";
 include_once "layouts/sidebar.php";
 include "../app/models/Category.php";
+ 
 
 $CategoriesObject = new Category;
 $result = $CategoriesObject->read();
@@ -70,7 +73,7 @@ if (isset($_SESSION["delete"])) {
                       <td> <?= $category['id'] ?></td>
                       <td> <?= $category['name'] ?></td>
                       <td>
-                        <a href="edit_category.php?id=<?= $category['id'] ?>" class="btn btn-primary btn-sm">Edit</a>
+                        <!-- <a href="edit_category.php?id=<?//= $category['id'] ?>" class="btn btn-primary btn-sm">Edit</a> -->
                         <a href="../app/controller/BackEnd/category/delete_category.php?id=<?= $category['id'] ?>" class="btn btn-danger btn-sm">Delete</a>
                       </td>
                     </tr>

@@ -1,11 +1,14 @@
 <?php
+ 
 session_start();
+include "../app/middleware/auth.php";
 include_once "layouts/header.php";
 include_once "layouts/nave.php";
 include_once "layouts/sidebar.php";
 include "../app/models/Category.php";
 include "../app/models/Author.php";
 include "../app/models/Publisher.php";
+ 
 
 $CategoriesObject = new Category;
 $result = $CategoriesObject->read();
@@ -90,7 +93,7 @@ if ($result) {
                   <input type="number" class="form-control" id="price" name="price" placeholder="Enter price">
                   <?php
                   if (isset($_SESSION['add_book']['price'])) {
-                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['price'] . "/div>";
+                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['price'] . "</div>";
                   }
                   ?>
                 </div>
@@ -100,7 +103,7 @@ if ($result) {
                   <input type="text" class="form-control" id="offer" name="offer" placeholder="Enter offer">
                   <?php
                   if (isset($_SESSION['add_book']['offer'])) {
-                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['offer'] . "/div>";
+                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['offer'] . "</div>";
                   }
                   ?>
                 </div>
@@ -111,7 +114,7 @@ if ($result) {
                   <input type="number" class="form-control" id="numberOfPages" name="numberOfPages" placeholder="Enter number of pages">
                   <?php
                   if (isset($_SESSION['add_book']['numberOfPages'])) {
-                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['numberOfPages'] . "/div>";
+                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['numberOfPages'] . "</div>";
                   }
                   ?>
                 </div>
@@ -136,9 +139,8 @@ if ($result) {
                   </select>
                   <?php
                   if (isset($_SESSION['add_book']['authorId'])) {
-                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['authorId'] . "/div>";
+                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['authorId'] . "</div>";
                   }
-
                   ?>
                 </div>
 
@@ -158,7 +160,7 @@ if ($result) {
                   </select>
                   <?php
                   if (isset($_SESSION['add_book']['categoryId'])) {
-                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['categoryId'] . "/div>";
+                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['categoryId'] . "</div>";
                   }
                   ?>
                 </div>
@@ -179,7 +181,7 @@ if ($result) {
                   </select>
                   <?php
                   if (isset($_SESSION['add_book']['publisherId'])) {
-                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['publisherId'] . "/div>";
+                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['publisherId'] . "</div>";
                   }
                   ?>
                 </div>
@@ -189,7 +191,7 @@ if ($result) {
                   <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter description"></textarea>
                   <?php
                   if (isset($_SESSION['add_book']['description'])) {
-                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['description'] . "/div>";
+                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['description'] . "</div>";
                   }
                   ?>
                 </div>
@@ -207,7 +209,7 @@ if ($result) {
                   </div>
                   <?php
                   if (isset($_SESSION['add_book']['image'])) {
-                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['image'] . "/div>";
+                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['image'] . "</div>";
                   }
                   ?>
                 </div>
