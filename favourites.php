@@ -1,6 +1,12 @@
-<?php include "layouts/header.php" ?>
-<?php include "layouts/nave.php" ?>
-<?php include "app/models/Book.php" ?>
+<?php
+session_start();
+include "layouts/header.php";
+include "layouts/nave.php";
+include "app/models/Book.php";
+
+$wishlist = new Wishlist();
+$wishlistItems = $wishlist->getWishlist($_SESSION['user']['id'] ?? 1);
+?>
 
 <main>
   <div
@@ -19,41 +25,59 @@
 
   <div class="my-5 py-5">
     <section class="section-container favourites">
-      <table class="w-100">
-        <thead>
-          <th class="d-none d-md-table-cell"></th>
-          <th class="d-none d-md-table-cell"></th>
-          <th class="d-none d-md-table-cell">الاسم</th>
-          <th class="d-none d-md-table-cell">السعر</th>
-          <th class="d-none d-md-table-cell">تاريخ الاضافه</th>
-          <th class="d-none d-md-table-cell">المخزون</th>
-          <th class="d-table-cell d-md-none">product</th>
-        </thead>
-        <tbody class="text-center">
-          <tr>
-            <td class="d-block d-md-table-cell">
-              <span class="favourites__remove m-auto">
-                <i class="fa-solid fa-xmark"></i>
-              </span>
-            </td>
-            <td class="d-block d-md-table-cell favourites__img">
-              <img src="assets/images/product-1.webp" alt="" />
-            </td>
-            <td class="d-block d-md-table-cell">
-              <a href=""> Flutter Apprentice </a>
-            </td>
-            <td class="d-block d-md-table-cell">
-              <span class="product__price product__price--old">550 جنية</span>
-              <span class="product__price">350 جنية</span>
-            </td>
-            <td class="d-block d-md-table-cell">يوليو 24, 2023</td>
-            <td class="d-block d-md-table-cell">
-              <span class="me-2"><i class="fa-solid fa-check"></i></span>
-              <span class="d-inline-block d-md-none d-lg-inline-block">متوفر بالمخزون</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <?php if (mysqli_num_rows($wishlistItems) > 0) : ?>
+        <table class="w-100">
+          <thead>
+            <th class="d-none d-md-table-cell"></th>
+            <th class="d-none d-md-table-cell"></th>
+            <th class="d-none d-md-table-cell">الاسم</th>
+            <th class="d-none d-md-table-cell">السعر</th>
+            <th class="d-none d-md-table-cell">تاريخ الاضافه</th>
+            <th class="d-none d-md-table-cell">Add To Cart</th>
+          </thead>
+          <tbody class="text-center">
+            <?php while ($wishlist_item = mysqli_fetch_assoc($wishlistItems)) : ?>
+              <tr class="favourites__item">
+                <td class="d-block d-md-table-cell">
+                  <a href="<?= "app/controller/FrontEnd/Book/remove_from_favourite.php?id=" . $wishlist_item['book_id'] . "&page=favourites" ?>" class="favourites__link text-decoration-none">
+                    <span class="favourites__remove m-auto">
+                      <i class="fa-solid fa-xmark text-danger"></i>
+                    </span>
+                  </a>
+                </td>
+                <td class="d-block d-md-table-cell favourites__img">
+                  <img src="<?= "Public/assets/Images/Books/" . $wishlist_item['image'] ?>" alt="<?= $wishlist_item['title'] ?>" />
+                </td>
+                <td class="d-block d-md-table-cell">
+                  <a href="<?= "single-product.php?id=" . $wishlist_item['book_id'] ?>" class="text-decoration-none"> <?= $wishlist_item['title'] ?> </a>
+                </td>
+                <td class="d-block d-md-table-cell">
+                  <?php if ($wishlist_item['offer'] > 0) : ?>
+                    <span class="product__price product__price--old"><?= "$" . $wishlist_item['price'] ?></span>
+                    <span class="product__price"><?= "$" . $wishlist_item['price'] - ($wishlist_item['price'] * ($wishlist_item['offer'] / 100)) ?></span>
+                  <?php else : ?>
+                    <span class="product__price"><?= "$" . $wishlist_item['price'] ?></span>
+                  <?php endif ?>
+                </td>
+                <td class="d-block d-md-table-cell"><?= $wishlist_item['created_at'] ?></td>
+                <td class="d-block d-md-table-cell">
+                  <a href="app/controller/FrontEnd/Book/add_to_cart.php?id=<?= $wishlist_item['book_id'] ?>&page=favourites" class="text-decoration-none">
+                    <i class="fas fa-cart-plus fa-2x"></i>
+                  </a>
+                </td>
+              </tr>
+            <?php endwhile ?>
+          </tbody>
+        </table>
+        <div class="row w-100 mt-5 ms-auto me-auto">
+          <a class="nav__cart-btn text-center w-100 py-2 px-3 mb-3 bg-transparent text-decoration-none" href="shop.php">تابع التسوق</a>
+          <a class="nav__cart-btn text-center text-white w-100 border-0 py-2 px-3 bg-danger text-decoration-none" href="app/controller/FrontEnd/Book/remove_all_from_favourite.php">حذف جميع المنتجات من المفضلة</a>
+        </div>
+      <?php else : ?>
+        <div class="text-center">
+          <h4>لا يوجد منتجات في المفضلة</h4>
+        </div>
+      <?php endif ?>
     </section>
   </div>
 </main>

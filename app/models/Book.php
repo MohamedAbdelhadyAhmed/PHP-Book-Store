@@ -187,7 +187,7 @@ class Book  extends config implements operations
   public function GetMostSellBooks()
   {
 
-    $query = "";
+    $query = "SELECT books.*, authors.name AS author_name, categories.name AS category_name FROM books INNER JOIN authors ON books.author_id = authors.id INNER JOIN categories ON books.category_id = categories.id ORDER BY `top_selling` DESC LIMIT 5";
     $result = $this->conn->query($query);
     return $result->fetch_assoc();
   }
@@ -210,5 +210,63 @@ class Book  extends config implements operations
     $this->lang = $lang;
 
     return $this;
+  }
+
+
+  public function GetBooks()
+  {
+    $query = "SELECT books.*, authors.name AS author_name, categories.name AS category_name FROM books INNER JOIN authors ON books.author_id = authors.id INNER JOIN categories ON books.category_id = categories.id";
+    $result = $this->conn->query($query);
+    return $result;
+  }
+
+  public function GetBooksWithOffer()
+  {
+    $query = "SELECT books.*, authors.name AS author_name, categories.name AS category_name FROM books INNER JOIN authors ON books.author_id = authors.id INNER JOIN categories ON books.category_id = categories.id ORDER BY `offer` DESC LIMIT 5";
+    $result = $this->conn->query($query);
+    return $result;
+  }
+
+  public function GettopSellingBooks()
+  {
+    $query = "SELECT books.*, authors.name AS author_name, categories.name AS category_name FROM books INNER JOIN authors ON books.author_id = authors.id INNER JOIN categories ON books.category_id = categories.id ORDER BY `top_selling` DESC LIMIT 5";
+    $result = $this->conn->query($query);
+    return $result;
+  }
+
+  public function GetNewBooks()
+  {
+    $query = "SELECT books.*, authors.name AS author_name, categories.name AS category_name FROM books INNER JOIN authors ON books.author_id = authors.id INNER JOIN categories ON books.category_id = categories.id ORDER BY `id` DESC LIMIT 4";
+    $result = $this->conn->query($query);
+    return $result;
+  }
+
+  public function GetBooksByLang($lang)
+  {
+    $query = "SELECT books.*, authors.name AS author_name, categories.name AS category_name FROM books INNER JOIN authors ON books.author_id = authors.id INNER JOIN categories ON books.category_id = categories.id WHERE books.lang = '$lang'";
+    $result = $this->conn->query($query);
+    return $result;
+  }
+
+  public function GetBookById($id)
+  {
+    $query = "SELECT books.*, authors.name AS author_name, categories.name AS category_name, publishers.name AS publisher_name FROM books INNER JOIN authors ON books.author_id = authors.id INNER JOIN categories ON books.category_id = categories.id INNER JOIN publishers ON books.publisher_id = publishers.id WHERE books.id = $id";
+    $result = $this->conn->query($query);
+    return mysqli_fetch_assoc($result);
+  }
+
+  public function GetBooksbyCategory($category_id)
+  {
+    $query = "SELECT books.*, authors.name AS author_name, categories.name AS category_name FROM books INNER JOIN authors ON books.author_id = authors.id INNER JOIN categories ON books.category_id = categories.id WHERE books.category_id = $category_id ORDER BY `id` DESC LIMIT 4";
+    $result = $this->conn->query($query);
+    return $result;
+  }
+
+
+  public function GetBooksBySearch($search)
+  {
+    $query = "SELECT books.*, authors.name AS author_name, categories.name AS category_name FROM books INNER JOIN authors ON books.author_id = authors.id INNER JOIN categories ON books.category_id = categories.id WHERE title LIKE '%$search%' || authors.name LIKE '%$search%' || categories.name LIKE '%$search%';";
+    $result = $this->conn->query($query);
+    return $result;
   }
 }

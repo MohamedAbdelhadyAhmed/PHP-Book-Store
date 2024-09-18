@@ -1,6 +1,13 @@
-<?php include "layouts/header.php" ?>
-<?php include "layouts/nave.php" ?>
-<?php include "app/models/Book.php" ?>
+<?php
+session_start();
+include "layouts/header.php";
+include "layouts/nave.php";
+$conn = mysqli_connect('localhost', 'root', '', 'book_store2');
+$user_id = $_SESSION['user']['id'] ?? 1;
+$sql = "SELECT * FROM users WHERE id = $user_id";
+$user = mysqli_query($conn, $sql);
+$user = mysqli_fetch_assoc($user);
+?>
 
 <main>
   <section class="page-top d-flex justify-content-center align-items-center flex-column text-center ">
@@ -69,37 +76,46 @@
     <div class="contact__side w-50">
       <h4 class="mb-3">يسعدنا تواصلك معنا في أى وقت</h4>
       <p>إذا كنت تواجه أي مشكلة أو ترغب في إسترجاع أو إستبدال المنتج لا تتردد أبدأ بالتواصل معنا في أي وقت. كل ماعليك هو ملئ النموذج التالي ببيانات صحيحة وسنقوم بمراجعة طلبك في أسرع وقت.</p>
-      <form class="contact__form" action="">
+      <form class="contact__form" action="<?= "app/controller/FrontEnd/Contact/add_message.php" ?>" method="POST">
         <div class="d-flex gap-3 mb-3">
           <div class="w-50">
-            <label for="name">الاسم<span class="required">*</span></label>
-            <input class="contact__input" id="name" type="text">
+            <label for="first_name">الاسم الاول<span class="required">*</span></label>
+            <input class="contact__input text-end" type="text" id="first_name" name="first_name" placeholder="الاسم الاول" value="<?= $user['first_name'] ?>" required>
+            <h5 class="text-end text-danger"><?= $_SESSION['error']['contact']['name'] ?? '' ?></h5>
           </div>
           <div class="w-50">
-            <label for="phone">رقم الهاتف<span class="required">*</span></label>
-            <input class="contact__input" id="phone" type="text">
+            <label for="last_name">الاسم الثاني<span class="required">*</span></label>
+            <input class="contact__input text-end" type="text" id="last_name" name="last_name" placeholder="الاسم الثاني" value="<?= $user['last_name'] ?>" required>
+            <h5 class="text-end text-danger"><?= $_SESSION['error']['contact']['name'] ?? '' ?></h5>
           </div>
+        </div>
+        <div class="mb-3">
+          <label for="phone">رقم الهاتف<span class="required">*</span></label>
+          <input class="contact__input" type="number" id="phone" name="phone" placeholder="رقم الهاتف" value="<?= $user['phone'] ?>" required>
+          <h5 class="text-end text-danger"><?= $_SESSION['error']['contact']['phone'] ?? '' ?></h5>
         </div>
         <div class="mb-3">
           <label for="email">البريد الالكتروني<span class="required">*</span></label>
-          <input class="contact__input" id="email" type="text">
+          <input class="contact__input" type="email" id="email" name="email" placeholder="البريد الالكتروني" value="<?= $user['email'] ?>" required>
+          <h5 class="text-end text-danger"><?= $_SESSION['error']['contact']['email'] ?? '' ?></h5>
         </div>
         <div class="mb-3">
-          <label for="reason">سبب التواصل<span class="required">*</span></label>
-          <select class="contact__input" id="reason">
-            <option value="">- اضغط هنا لاختيرا السبب -</option>
-            <option value="">استفسار</option>
-            <option value="">استبدال</option>
-            <option value="">استرجاع</option>
-            <option value="">استعجال اوردر</option>
-            <option value="">اخري</option>
+          <label for="title">سبب التواصل<span class="required">*</span></label>
+          <select class="contact__input" id="title" name="title" required>
+            <option value="استفسار" selected>استفسار</option>
+            <option value="استبدال">استبدال</option>
+            <option value="استرجاع">استرجاع</option>
+            <option value="استعجال الطلب">استعجال الطلب</option>
+            <option value="اخري">اخري</option>
           </select>
+          <h5 class="text-end text-danger"><?= $_SESSION['error']['contact']['title'] ?? '' ?></h5>
         </div>
         <div>
-          <label for="reason">نص الرسالة<span class="required">*</span></label>
-          <textarea class="contact__input" name="" id=""></textarea>
+          <label for="message">نص الرسالة<span class="required">*</span></label>
+          <textarea class="contact__input" name="message" id="message" placeholder="نص الرسالة" required></textarea>
+          <h5 class="text-end text-danger"><?= $_SESSION['error']['contact']['message'] ?? '' ?></h5>
         </div>
-        <button class="primary-button w-100 rounded-2">ارسال الطلب</button>
+        <button class="primary-button w-100 rounded-2" type="submit">ارسال الطلب</button>
       </form>
     </div>
     <div class="contact__side w-50 text-center">
@@ -112,4 +128,7 @@
   </div>
 </main>
 
-<?php include "layouts/footer.php" ?>
+<?php
+unset($_SESSION['error']);
+include "layouts/footer.php";
+?>
