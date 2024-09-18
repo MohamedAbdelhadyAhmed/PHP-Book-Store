@@ -182,7 +182,11 @@ class Book  extends config implements operations
 
     return $this->runDQL($sql);
   }
-  public function delete() {}
+  public function delete()
+  {
+    $sql  = "DELETE FROM `books` WHERE `id`='$this->id'";
+    return $this->runDML($sql);
+  }
 
   public function GetMostSellBooks()
   {

@@ -1,9 +1,11 @@
 <?php
 session_start();
+include "../app/middleware/auth.php";
 include_once "layouts/header.php";
 include_once "layouts/nave.php";
 include_once "layouts/sidebar.php";
 include "../app/models/Publisher.php";
+
 
 $publishersObject = new Publisher;
 $result = $publishersObject->read();
@@ -72,7 +74,7 @@ if (isset($_SESSION["delete"])) {
                       <td> <?= $publisher['name'] ?></td>
                       <td> <?= $publisher['phone'] ?></td>
                       <td>
-                        <a href="edit_publisher.php?id=<?= $publisher['id'] ?>" class="btn btn-primary btn-sm">Edit</a>
+                        <!-- <a href="edit_publisher.php?id=<?//= $publisher['id'] ?>" class="btn btn-primary btn-sm">Edit</a> -->
                         <a href="../app/controller/BackEnd/publisher/delete_publisher.php?id=<?= $publisher['id'] ?>" class="btn btn-danger btn-sm">Delete</a>
                       </td>
                     </tr>

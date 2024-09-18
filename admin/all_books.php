@@ -1,8 +1,11 @@
 <?php
+session_start();
+include "../app/middleware/auth.php";
 include_once "layouts/header.php";
 include_once "layouts/nave.php";
 include_once "layouts/sidebar.php";
 include "../app/models/Book.php";
+ 
 
 $bookObject = new Book;
 $result = $bookObject->read();
@@ -41,8 +44,13 @@ if ($result) {
             <div class="card-header">
               <h3 class="card-title">All Books</h3>
             </div>
-            <!-- /.card-header -->
+            <!-- /.card-header   -->
             <div class="card-body">
+              <?php
+              if (isset($_SESSION["book_deleted"])) {
+                echo "<div class='alert alert-danger'>" .  $_SESSION["book_deleted"] . "</div>";
+              } ?>
+
               <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -66,7 +74,7 @@ if ($result) {
                       <td> <?= $book['publisher_name'] ?></td>
                       <td>
                         <a href="edit_book.php?id=<?= $book['id'] ?>" class="btn btn-primary btn-sm">Edit</a>
-                        <a href=".../app/controller/BackEnd/Book/delete_book.php?id==<?= $book['id'] ?>" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="../app/controller/BackEnd/Book/delete_book.php?id=<?= $book['id'] ?>" class="btn btn-danger btn-sm">Delete</a>
                       </td>
                     </tr>
                   <?php  } ?>
@@ -97,4 +105,6 @@ if ($result) {
     </div>
   </section>
 </div>
-<?php include_once "layouts/footer.php"; ?>
+<?php
+unset($_SESSION["book_deleted"]);
+include_once "layouts/footer.php"; ?>

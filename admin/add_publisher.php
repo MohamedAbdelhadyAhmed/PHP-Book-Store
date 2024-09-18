@@ -1,9 +1,12 @@
 <?php
 session_start();
+include "../app/middleware/auth.php";
 // print_r($_SESSION['add_author']);die; add_publisher
 include_once "layouts/header.php";
 include_once "layouts/nave.php";
 include_once "layouts/sidebar.php";
+include "../app/middleware/auth.php";
+
 ?> Publisher
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->

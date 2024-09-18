@@ -1,8 +1,5 @@
 <?php
-
-// allow guests and prevent authenticated users
-if(!empty($_SESSION['user'])){
+if (isset($_SESSION['admin'])){
     header('location:index.php');die;
 }
-
-// $_SERVER['HTTP_REFFER'];
+?>

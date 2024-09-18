@@ -57,7 +57,7 @@ class User extends config implements operations
     }
     public function setPassword($password)
     {
-        $this->password = $password;
+        $this->password = sha1($password);
     }
 
     public function getStatus()
