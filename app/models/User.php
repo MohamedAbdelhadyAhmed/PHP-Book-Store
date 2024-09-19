@@ -143,8 +143,9 @@ class User extends config implements operations
     //================================ Functions Here =====================================================
     public function create()
     {
-        $query = "INSERT INTO `users`(first_name , last_name , email , `password`) VALUES  
-        ('$this->first_name','$this->last_name','$this->email', '$this->password')";
+        $query = "INSERT INTO `users`(first_name , last_name ,phone, email , `password`) VALUES  
+        ('$this->first_name','$this->last_name','$this->phone','$this->email', '$this->password')";
+        // print_r( $query );die;
         return $this->runDML($query);
     }
     public function login()
