@@ -3,6 +3,7 @@ session_start();
 include "layouts/header.php";
 include "layouts/nave.php";
 include "app/models/Book.php";
+
 $bookObject = new Book();
 if (isset($_GET['lang'])) {
   $lang = $_GET['lang'];

@@ -3,7 +3,6 @@ session_start();
 include "layouts/header.php";
 include "layouts/nave.php";
 include "app/models/Book.php";
-
 $wishlist = new Wishlist();
 $wishlistItems = $wishlist->getWishlist($_SESSION['user']['id'] ?? 1);
 ?>

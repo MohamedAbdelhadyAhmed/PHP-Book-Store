@@ -7,7 +7,6 @@ $bookObject = new Book();
 $books_top_sell = $bookObject->GettopSellingBooks();
 $books_offer = $bookObject->GetBooksWithOffer();
 $books_new = $bookObject->GetNewBooks();
-
 $wishlist = new Wishlist();
 ?>
 

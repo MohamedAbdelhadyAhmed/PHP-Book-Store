@@ -8,7 +8,6 @@ $sql = "SELECT * FROM users WHERE id = $user_id";
 $user = mysqli_query($conn, $sql);
 $user = mysqli_fetch_assoc($user);
 ?>
-
 <main>
   <section class="page-top d-flex justify-content-center align-items-center flex-column text-center ">
     <div class="page-top__overlay"></div>

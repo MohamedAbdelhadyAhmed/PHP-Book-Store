@@ -12,7 +12,6 @@ if (isset($_GET['id'])) {
 } else {
   header("location:index.php");
 }
-
 $wishlist = new Wishlist();
 $book_in_wishlist = $wishlist->checkWishlistbyBookId($_GET['id'], ($_SESSION['user_id'] ?? 1));
 ?>

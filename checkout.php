@@ -30,7 +30,6 @@ $user = mysqli_fetch_assoc($result);
       </div>
     </div>
   </section>
-
   <section class="section-container my-5 py-5 d-lg-flex">
     <div class="checkout__form-cont w-50 px-3 mb-5">
       <h4>الفاتورة </h4>

@@ -18,7 +18,6 @@ include "layouts/nave.php";
       </div>
     </div>
   </section>
-
   <section class="section-container my-5 py-5">
     <p class="mb-5">فضلًا أدخل رقم طلبك في الصندوق أدناه وأضغط زر لتتبعه "تتبع الطلب" لعرض حالته. بإمكانك العثور على رقم الطلب في البريد المرسل إليك والذي يحتوي على فاتورة تأكيد الطلب.</p>
     <form action="order-details.php" method="POST">
