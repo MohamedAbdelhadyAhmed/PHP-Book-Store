@@ -1,9 +1,4 @@
 <?php
-
-
-
-// echo _DIR_.'/../database/config.php';
-// die();
 include_once __DIR__ . '/../database/config.php';
 include_once __DIR__ . '/../database/operations.php';
 class User extends config implements operations
@@ -12,10 +7,9 @@ class User extends config implements operations
     private $id;
     private $first_name;
     private $last_name;
-    private $first_name;
-    private $last_name;
     private $email;
     private $phone;
+    private $image;
     private $password;
     private $status;
     private $createdAt;
@@ -29,7 +23,6 @@ class User extends config implements operations
     {
         $this->id = $id;
     }
-
 
 
 
@@ -147,69 +140,20 @@ class User extends config implements operations
         return $this;
     }
 
-    /**
-     * Get the value of first_name
-     */
-    public function getFirst_name()
-    {
-        return $this->first_name;
-    }
-
-    /**
-     * Set the value of first_name
-     *
-     * @return  self
-     */
-    public function setFirst_name($first_name)
-    {
-        $this->first_name = $first_name;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of last_name
-     */
-    public function getLast_name()
-    {
-        return $this->last_name;
-    }
-
-    /**
-     * Set the value of last_name
-     *
-     * @return  self
-     */
-    public function setLast_name($last_name)
-    {
-        $this->last_name = $last_name;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of image
-     */
-    public function getImage()
-    {
-        return $this->image;
-    }
-
-    /**
-     * Set the value of image
-     *
-     * @return  self
-     */
-    public function setImage($image)
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
     //================================ Functions Here =====================================================
-    public  function create() {}
+    public function create()
+    {
+        $query = "INSERT INTO `users`(first_name , last_name , email , `password`) VALUES  
+        ('$this->first_name','$this->last_name','$this->email', '$this->password')";
+        return $this->runDML($query);
+    }
+    public function login()
+    {
+        $query = "SELECT * FROM users WHERE email = '$this->email' AND password = '$this->password'";
+        return $this->runDQL($query);
+    }
     public function update() {}
     public function read() {}
     public function delete() {}
+
 }

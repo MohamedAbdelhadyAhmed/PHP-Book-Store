@@ -1,8 +1,8 @@
 <?php
 session_start();
-?>
-<?php include "layouts/header.php" ?>
-<?php include "layouts/nave.php" ?>
+
+include "layouts/header.php";
+include "layouts/nave.php"; ?>
 
 
 <main>
@@ -36,7 +36,7 @@ session_start();
       <!-- login -->
       <div class="account__login w-100">
         <form class="mb-5" action="./app/controller/FrontEnd/Auth/login.php" method="POST">
-        <?php
+          <?php
           // if (isset($_SESSION['login_user']['email'])) {
           //   echo "<div class='alert alert-danger'>" . $_SESSION['login_user']['email'] . "</div>";
           // }
