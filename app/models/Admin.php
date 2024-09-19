@@ -77,6 +77,7 @@ class Admin  extends config implements operations
         $this->updatedAt = $updatedAt;
     }
     //================================ Functions Here =====================================================
+    //================================ Functions Here =====================================================
     public function create()
     {
         $query = "INSERT INTO `admins`(`name`, `email`, `password`) VALUES  ('$this->name','$this->email', '$this->password')";
