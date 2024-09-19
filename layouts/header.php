@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="assets/css/vendors/owl.carousel.min.css">
     <link rel="stylesheet" href="assets/css/vendors/owl.theme.default.min.css">
     <link rel="stylesheet" href="assets/css/main.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>

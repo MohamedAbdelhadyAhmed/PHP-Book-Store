@@ -16,4 +16,4 @@ if (!empty($_SESSION['error'])) {
     $result = $contact->add_message($user_id);
     $_SESSION['contact']['add'] = "Contact Added Successfully";
 }
-header("Location:../../../../contact.php");
+echo "<script>window.history.back()</script>";

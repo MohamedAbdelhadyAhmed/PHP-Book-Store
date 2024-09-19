@@ -76,11 +76,11 @@ $wishlist = new Wishlist();
               class="product__favourite position-absolute top-0 end-0 m-1 rounded-circle d-flex justify-content-center align-items-center bg-white">
               <?php $book_in_wishlist = $wishlist->checkWishlistbyBookId($book['id'], ($_SESSION['user_id'] ?? 1)); ?>
               <?php if ($book_in_wishlist->num_rows > 0) : ?>
-                <a href="<?= "app/controller/FrontEnd/Book/remove_from_favourite.php?id=" . $book['id'] . "&page=index" ?>" class="text-decoration-none text-dark">
+                <a href="<?= "app/controller/FrontEnd/Book/remove_from_favourite.php?id=" . $book['id'] ?>" class="text-decoration-none text-dark">
                   <i class="fa-solid fa-heart text-danger"></i>
                 </a>
               <?php else : ?>
-                <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id'] . "&page=index" ?>" class="text-decoration-none text-dark">
+                <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id'] ?>" class="text-decoration-none text-dark">
                   <i class="fa-regular fa-heart"></i>
                 </a>
               <?php endif; ?>
@@ -170,11 +170,11 @@ $wishlist = new Wishlist();
               class="product__favourite position-absolute top-0 end-0 m-1 rounded-circle d-flex justify-content-center align-items-center bg-white">
               <?php $book_in_wishlist = $wishlist->checkWishlistbyBookId($book['id'], ($_SESSION['user_id'] ?? 1)); ?>
               <?php if ($book_in_wishlist->num_rows > 0) : ?>
-                <a href="<?= "app/controller/FrontEnd/Book/remove_from_favourite.php?id=" . $book['id'] . "&page=index" ?>" class="text-decoration-none text-dark">
+                <a href="<?= "app/controller/FrontEnd/Book/remove_from_favourite.php?id=" . $book['id'] ?>" class="text-decoration-none text-dark">
                   <i class="fa-solid fa-heart text-danger"></i>
                 </a>
               <?php else : ?>
-                <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id'] . "&page=index" ?>" class="text-decoration-none text-dark">
+                <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id'] ?>" class="text-decoration-none text-dark">
                   <i class="fa-regular fa-heart"></i>
                 </a>
               <?php endif; ?>
@@ -243,11 +243,11 @@ $wishlist = new Wishlist();
               class="product__favourite position-absolute top-0 end-0 m-1 rounded-circle d-flex justify-content-center align-items-center bg-white">
               <?php $book_in_wishlist = $wishlist->checkWishlistbyBookId($book['id'], ($_SESSION['user_id'] ?? 1)); ?>
               <?php if ($book_in_wishlist->num_rows > 0) : ?>
-                <a href="<?= "app/controller/FrontEnd/Book/remove_from_favourite.php?id=" . $book['id'] . "&page=index" ?>" class="text-decoration-none text-dark">
+                <a href="<?= "app/controller/FrontEnd/Book/remove_from_favourite.php?id=" . $book['id'] ?>" class="text-decoration-none text-dark">
                   <i class="fa-solid fa-heart text-danger"></i>
                 </a>
               <?php else : ?>
-                <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id'] . "&page=index" ?>" class="text-decoration-none text-dark">
+                <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id'] ?>" class="text-decoration-none text-dark">
                   <i class="fa-regular fa-heart"></i>
                 </a>
               <?php endif; ?>

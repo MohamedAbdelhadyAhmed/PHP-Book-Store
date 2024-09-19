@@ -32,7 +32,6 @@ $order_id = $orders['id'];
 $cart = new Cart();
 $cart_items = $cart->getCartItems($user_id);
 $order_items = new OrderItem();
-
 while ($cart_item = mysqli_fetch_assoc($cart_items)) {
     $book_id = $cart_item['book_id'];
     $quantity = $cart_item['quantity'];
@@ -41,4 +40,4 @@ while ($cart_item = mysqli_fetch_assoc($cart_items)) {
 }
 $cart->removeAllFromCart($user_id);
 $_SESSION['order']['add'] = "تم اضافة الطلب بنجاح";
-header("location: ../../../../orders.php");
+header("location: ../../../../order-recieved.php?id=$order_id");

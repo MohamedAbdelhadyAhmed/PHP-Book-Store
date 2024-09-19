@@ -94,7 +94,19 @@ class OrderItem  extends config implements operations
         $query = "SELECT `order_items`.*, `books`.`title`, `books`.`offer`, `orders`.`status`, `orders`.`total_amount` FROM `order_items` 
         INNER JOIN `books` ON `order_items`.`book_id` = `books`.`id` 
         INNER JOIN `orders` ON `order_items`.`order_id` = `orders`.`id` 
-        WHERE `order_items`.`order_id` = $order_id AND `orders`.`user_id` = $user_id;";
+        WHERE `order_items`.`order_id` = $order_id AND `orders`.`user_id` = $user_id";
+        $result = $this->conn->query($query);
+        return $result;
+    }
+
+    public function GetOrderItemsbyEmail($order_id, $user_id, $email)
+    {
+        $query = "SELECT `order_items`.*, `books`.`title`, `books`.`offer`, `orders`.`status`, `orders`.`total_amount` FROM `order_items` 
+        INNER JOIN `books` ON `order_items`.`book_id` = `books`.`id` 
+        INNER JOIN `orders` ON `order_items`.`order_id` = `orders`.`id`
+        INNER JOIN `users` ON `orders`.`user_id` = `users`.`id`
+        INNER JOIN `addresses` ON `users`.`id` = `addresses`.`user_id` 
+        WHERE `order_items`.`order_id` = $order_id AND `orders`.`user_id` = $user_id AND `users`.`email` = '$email'";
         $result = $this->conn->query($query);
         return $result;
     }

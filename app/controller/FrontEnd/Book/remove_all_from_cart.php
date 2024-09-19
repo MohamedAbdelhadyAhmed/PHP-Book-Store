@@ -8,4 +8,4 @@ $cart = new Cart();
 
 $cart->removeAllFromCart($_SESSION['user']['id'] ?? 1);
 $_SESSION['cart']['remove'] = "removed all from cart successfully";
-header("location:../../../../index.php");
+echo "<script>window.history.back()</script>";

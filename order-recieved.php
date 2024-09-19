@@ -1,21 +1,23 @@
-<?php include "layouts/header.php" ?>
-<?php include "layouts/nave.php" ?>
-<?php include "app/models/Book.php" ?>
+<?php
+session_start();
+include "layouts/header.php";
+include "layouts/nave.php";
+include "app/models/order.php";
+include "app/models/OrderItem.php";
+if (isset($_GET['id'])) {
+  $Oredr_Item = new OrderItem();
+  $items = $Oredr_Item->GetOrderItems($_GET['id'], ($_SESSION['user']['id'] ?? 1));
+  $order = new Order();
+  $user = $order->GetOrderAddress($_GET['id'], ($_SESSION['user']['id'] ?? 1));
+  $orders = $order->GetOrder($_GET['id'], ($_SESSION['user']['id'] ?? 1));
+} else {
+  echo "<script>window.history.back()</script>";
+  die;
+}
+
+?>
 
 <main>
-  <section
-    class="page-top d-flex justify-content-center align-items-center flex-column text-center">
-    <div class="page-top__overlay"></div>
-    <div class="position-relative">
-      <div class="page-top__title mb-3">
-        <h2>حسابي</h2>
-      </div>
-      <div class="page-top__breadcrumb">
-        <a class="text-gray" href="index.php">الرئيسية</a> /
-        <span class="text-gray">حسابي</span>
-      </div>
-    </div>
-  </section>
 
   <section class="section-container profile my-5 py-5">
     <div class="text-center mb-5">
@@ -27,90 +29,90 @@
         سيقوم أحد ممثلي خدمة العملاء بالتواصل معك لتأكيد الطلب
       </p>
       <p>برجاء الرد على الأرقام الغير مسجلة</p>
-      <button class="primary-button">تصفح منتجات اخري</button>
+      <a class="primary-button text-decoration-none" href="shop.php">تصفح منتجات اخري</a>
     </div>
     <div>
       <p>شكرًا لك. تم استلام طلبك.</p>
       <div class="d-flex flex-wrap gap-2">
         <div class="success__details">
           <p class="success__small">رقم الطلب:</p>
-          <p class="fw-bolder">79917</p>
+          <p class="fw-bolder">#<?= $orders['id'] ?></p>
         </div>
         <div class="success__details">
           <p class="success__small">التاريخ:</p>
-          <p class="fw-bolder">يوليو 26, 2023</p>
+          <p class="fw-bolder"><?= $orders['created_at'] ?></p>
         </div>
         <div class="success__details">
           <p class="success__small">البريد الإلكتروني:</p>
-          <p class="fw-bolder">moamenyt@gmail.com</p>
+          <p class="fw-bolder"><?= $user['email'] ?></p>
         </div>
         <div class="success__details">
           <p class="success__small">الإجمالي:</p>
-          <p class="fw-bolder">389.00 جنيه</p>
+          <p class="fw-bolder"><?= "$" . $orders['total_amount'] ?></p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section-container">
+  <section>
     <h2>تفاصيل الطلب</h2>
     <table class="success__table w-100 mb-5">
       <thead>
-        <tr class="border-0 bg-main text-white">
+        <tr class="border-0 bg-danger text-white">
           <th>المنتج</th>
           <th class="d-none d-md-table-cell">الإجمالي</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>
-            <div>
-              <a href="">كوتش فلات ديزارت -رجالى - الابيض, 42</a> x 1
-            </div>
-            <div>
-              <span class="fw-bold">اللون:</span>
-              <span>لابيض</span>
-            </div>
-            <div>
-              <span class="fw-bold">المقاس:</span>
-              <span>42</span>
-            </div>
-          </td>
-          <td>200.00 جنيه</td>
-        </tr>
-        <tr>
-          <td>
-            <div><a href="">كوتش كاجوال -رجالى - بنى, 43</a> x 1</div>
-            <div>
-              <span class="fw-bold">اللون:</span>
-              <span>بني</span>
-            </div>
-            <div>
-              <span class="fw-bold">المقاس:</span>
-              <span>43</span>
-            </div>
-          </td>
-          <td>150.00 جنيه</td>
-        </tr>
+        <?php $price_after_offer = 0; ?>
+        <?php $total_price = 0; ?>
+        <?php while ($item = $items->fetch_assoc()) : ?>
+          <tr>
+            <td>
+              <div>
+                <a href="<?= "single-product.php?id=" . $item['book_id']; ?>"><?= $item['title']; ?></a>
+              </div>
+              <div>
+                <span class="fw-bold">Quantity :</span>
+                <span><?= $item['quantity']; ?></span>
+              </div>
+              <div>
+                <span class="fw-bold">Price :</span>
+                <span><?= $item['price']; ?></span>
+              </div>
+            </td>
+            <?php if ($item['offer'] > 0): ?>
+              <td>
+                <?= "$" . $price_after_offer = (($item['price'] - ($item['price'] * ($item['offer'] / 100))) * $item['quantity']); ?>
+                <span class="text-decoration-line-through">
+                  <?= "$" . $item['price'] * $item['quantity']; ?>
+                </span>
+              </td>
+            <?php else: ?>
+              <td><?= "$" . $price_after_offer = $item['price'] * $item['quantity']; ?></td>
+            <?php endif; ?>
+          </tr>
+          <?php $total_price += $price_after_offer; ?>
+        <?php endwhile; ?>
         <tr>
           <th>المجموع:</th>
-          <td class="fw-bolder">350.00 جنيه</td>
+          <td class="fw-bolder"><?= "$" . $total_price; ?></td>
         </tr>
         <tr>
           <th>الإجمالي:</th>
-          <td class="fw-bold">389.00 جنيه</td>
+          <td class="fw-bold"><?= "$" . $orders['total_amount'] ?></td>
         </tr>
       </tbody>
     </table>
   </section>
-  <section class="section-container mb-5">
+  <section class="mb-5">
     <h2>عنوان الفاتورة</h2>
     <div class="border p-3 rounded-3">
-      <p class="mb-1">محمد محسن</p>
-      <p class="mb-1">43 الاتحاد</p>
-      <p class="mb-1">القاهرة</p>
-      <p class="mb-1">01020288964</p>
-      <p class="mb-1">moamenyt@gmail.com</p>
+      <p class="mb-1"><?= $user['first_name'] . " " . $user['last_name'] ?></p>
+      <p class="mb-1"><?= $user['street'] ?></p>
+      <p class="mb-1"><?= $user['state'] ?></p>
+      <p class="mb-1"><?= $user['phone'] ?></p>
+      <p class="mb-1"><?= $user['email'] ?></p>
     </div>
   </section>
 </main>

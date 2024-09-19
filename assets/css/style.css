@@ -1,0 +1,48 @@
+.progress-label {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.progress-step {
+    text-align: center;
+    margin-top: 10px;
+}
+
+
+.progress-circle {
+    width: 30px;
+    height: 30px;
+    background-color: gray;
+    border-radius: 50%;
+    border: 2px solid #0d6efd;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin-top: -25px;
+}
+
+.progress-circle.check {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+.progress-circle i {
+    font-size: 10px;
+}
+
+.circle-1 {
+    right: 10%;
+}
+
+.circle-2 {
+    right: 35%;
+}
+
+.circle-3 {
+    right: 63%;
+}
+
+.circle-4 {
+    right: 87%;
+}

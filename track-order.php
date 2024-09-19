@@ -1,5 +1,8 @@
-<?php include "layouts/header.php" ?>
-<?php include "layouts/nave.php" ?>
+<?php
+session_start();
+include "layouts/header.php";
+include "layouts/nave.php";
+?>
 
 <main>
   <section
@@ -18,16 +21,16 @@
 
   <section class="section-container my-5 py-5">
     <p class="mb-5">فضلًا أدخل رقم طلبك في الصندوق أدناه وأضغط زر لتتبعه "تتبع الطلب" لعرض حالته. بإمكانك العثور على رقم الطلب في البريد المرسل إليك والذي يحتوي على فاتورة تأكيد الطلب.</p>
-    <form action="">
+    <form action="order-details.php" method="POST">
       <div class="mb-4">
-        <label for="">رقم الطلب</label>
-        <input class="form__input" placeholder="ستجده في رسالة تأكيد طلبك." type="text">
+        <label for="id">رقم الطلب</label>
+        <input class="form__input text-start" placeholder="ستجده في رسالة تأكيد طلبك" type="number" id="id" name="id" required>
       </div>
       <div class="mb-4">
-        <label for="">البريد الالكتروني للفاتورة</label>
-        <input class="form__input" placeholder="البريد الالكتروني الذي استخدمته اثناء اتمام الطلب" type="text">
+        <label for="email">البريد الالكتروني للفاتورة</label>
+        <input class="form__input text-start" placeholder="البريد الالكتروني الذي استخدمته اثناء اتمام الطلب" type="email" id="email" name="email" required>
       </div>
-      <button class="primary-button">تتبع طلبك</button>
+      <button class="primary-button" type="submit">تتبع طلبك</button>
     </form>
   </section>
 </main>

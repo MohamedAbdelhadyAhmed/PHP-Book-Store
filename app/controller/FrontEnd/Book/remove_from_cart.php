@@ -11,4 +11,4 @@ if (isset($_GET['id'])) {
     $_SESSION['cart']['remove'] = "removed from cart successfully";
 }
 
-header("location:../../../../index.php");
+echo "<script>window.history.back()</script>";

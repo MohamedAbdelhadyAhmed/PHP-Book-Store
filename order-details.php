@@ -1,15 +1,27 @@
 <?php
+session_start();
 include "layouts/header.php";
 include "layouts/nave.php";
 include "app/models/order.php";
 include "app/models/OrderItem.php";
 
 $Oredr_Item = new OrderItem();
-$items = $Oredr_Item->GetOrderItems($_GET['id'], ($_SESSION['user']['id'] ?? 1));
-
-$orders = new Order();
-$user = $orders->GetOrderAddress($_GET['id'], ($_SESSION['user']['id'] ?? 1));
-$orders = $orders->GetOrder($_GET['id'], ($_SESSION['user']['id'] ?? 1));
+if (isset($_POST['id']) && isset($_POST['email'])) {
+  $items = $Oredr_Item->GetOrderItemsbyEmail($_POST['id'], ($_SESSION['user']['id'] ?? 1), $_POST['email']);
+  if ($items->num_rows == 0) {
+    $_SESSION['errors']['orders'] = "لا يوجد بيانات لهذا الطلب";
+    echo "<script>window.history.back()</script>";
+    die;
+  }
+} elseif (isset($_GET['id'])) {
+  $items = $Oredr_Item->GetOrderItems($_GET['id'], ($_SESSION['user']['id'] ?? 1));
+} else {
+  echo "<script>window.history.back()</script>";
+  die;
+}
+$order = new Order();
+$user = $order->GetOrderAddress($_GET['id'], ($_SESSION['user']['id'] ?? 1));
+$orders = $order->GetOrder($_GET['id'], ($_SESSION['user']['id'] ?? 1));
 ?>
 
 <main>
@@ -18,19 +30,76 @@ $orders = $orders->GetOrder($_GET['id'], ($_SESSION['user']['id'] ?? 1));
     <div class="page-top__overlay"></div>
     <div class="position-relative">
       <div class="page-top__title mb-3">
-        <h2>تتبع طلبك</h2>
+        <h2>
+          تفاصيل الطلب
+        </h2>
       </div>
       <div class="page-top__breadcrumb">
         <a class="text-gray" href="index.php">الرئيسية</a> /
-        <span class="text-gray">تتبع طلبك</span>
+        <span class="text-gray">تفاصيل الطلب</span>
       </div>
     </div>
   </div>
-
   <section class="section-container my-5 py-5">
-    <h5 class="text-end">
-      .Request #<?= $_GET['id']; ?> was submitted on <?= $orders['created_at']; ?> and is currently in <?= $orders['status']; ?>
-    </h5>
+    <div class="container" dir="rtl">
+      <?php
+      $shipment_status = $order->shipment_status($_GET['id'], ($_SESSION['user']['id'] ?? 1));
+      $progress_percentage = 0;
+      list($shipment_status, $progress_percentage) = $order->GetShipmentStatus($shipment_status, $progress_percentage);
+      $is_step_1_complete = $progress_percentage >= 25;
+      $is_step_2_complete = $progress_percentage >= 50;
+      $is_step_3_complete = $progress_percentage >= 75;
+      $is_step_4_complete = $progress_percentage == 100;
+      ?>
+      <h2 class="text-center"><?= $shipment_status; ?></h2>
+      <p class="text-center">
+        <?php
+        if ($shipment_status == "تم الشحن") {
+          echo "وصلت الشحنة إلى آخر منشأة توصيل";
+        } elseif ($shipment_status == "خرج للتوصيل") {
+          echo "الشحنة في الطريق للتوصيل";
+        } elseif ($shipment_status == "تم التوصيل") {
+          echo "تم توصيل الشحنة بنجاح";
+        } else {
+          echo "تم طلب الشحنة وهي قيد التجهيز.";
+        }
+        ?>
+      </p>
+      <div>
+        <div class="progress position-relative" style="height: 20px;">
+          <div class="progress-bar" role="progressbar" style="width: <?= $progress_percentage; ?>%;" aria-valuenow="<?= $progress_percentage; ?>" aria-valuemin="0" aria-valuemax="100">
+          </div>
+        </div>
+        <div>
+          <div class="progress-circle circle-1 <?= $is_step_1_complete ? 'check' : ''; ?>">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="progress-circle circle-2 <?= $is_step_2_complete ? 'check' : ''; ?>">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="progress-circle circle-3 <?= $is_step_3_complete ? 'check' : ''; ?>">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="progress-circle circle-4 <?= $is_step_4_complete ? 'check' : ''; ?>">
+            <i class="fas fa-check"></i>
+          </div>
+        </div>
+      </div>
+      <div class="row text-center mt-4">
+        <div class="col progress-step">
+          <p class="<?= ($progress_percentage >= 25) ? 'text-success' : ''; ?>">تم طلبه</p>
+        </div>
+        <div class="col progress-step">
+          <p class="<?= ($progress_percentage >= 50) ? 'text-success' : ''; ?>">تم الشحن</p>
+        </div>
+        <div class="col progress-step">
+          <p class="<?= ($progress_percentage >= 75) ? 'text-success' : ''; ?>">خرج للتوصيل</p>
+        </div>
+        <div class="col progress-step">
+          <p class="<?= ($progress_percentage == 100) ? 'text-success' : ''; ?>">تم التوصيل</p>
+        </div>
+      </div>
+    </div>
 
     <section>
       <h2>تفاصيل الطلب</h2>

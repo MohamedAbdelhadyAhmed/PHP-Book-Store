@@ -79,6 +79,7 @@
 <script src="assets/js/vendors/owl.carousel.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     <?php if (isset($_SESSION['cart']['add'])) : ?>
         alert("<?= $_SESSION['cart']['add'] ?>");
@@ -98,6 +99,9 @@
     <?php elseif (isset($_SESSION['contact']['add'])) : ?>
         alert("<?= $_SESSION['contact']['add'] ?>");
         <?php unset($_SESSION['contact']['add']); ?>
+    <?php elseif (isset($_SESSION['errors']['orders'])) : ?>
+        alert("<?= $_SESSION['errors']['orders'] ?>");
+        <?php unset($_SESSION['errors']['orders']); ?>
     <?php endif; ?>
 </script>
 </body>

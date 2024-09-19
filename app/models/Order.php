@@ -110,4 +110,39 @@ class Order  extends config implements operations
         $result = $this->conn->query($sql);
         return mysqli_fetch_assoc($result);
     }
+
+    public function shipment_status($order_id, $user_id)
+    {
+        $sql = "SELECT * FROM `orders` WHERE `id` = $order_id AND `user_id` = $user_id";
+        $result = $this->conn->query($sql);
+        $row = mysqli_fetch_assoc($result);
+        return $row['status'];
+    }
+
+    public function GetShipmentStatus($shipment_status, $progress_percentage)
+    {
+        switch ($shipment_status) {
+            case "pending":
+                $shipment_status = "تم طلبه";
+                $progress_percentage = 25;
+                break;
+            case "shipped":
+                $shipment_status = "تم الشحن";
+                $progress_percentage = 50;
+                break;
+            case "delivered":
+                $shipment_status = "خرج للتوصيل";
+                $progress_percentage = 75;
+                break;
+            case "canceled":
+                $shipment_status = "تم التوصيل";
+                $progress_percentage = 100;
+                break;
+            default:
+                $shipment_status = "";
+                $progress_percentage = 0;
+                break;
+        }
+        return array($shipment_status, $progress_percentage);
+    }
 }

@@ -39,7 +39,7 @@ $wishlistItems = $wishlist->getWishlist($_SESSION['user']['id'] ?? 1);
             <?php while ($wishlist_item = mysqli_fetch_assoc($wishlistItems)) : ?>
               <tr class="favourites__item">
                 <td class="d-block d-md-table-cell">
-                  <a href="<?= "app/controller/FrontEnd/Book/remove_from_favourite.php?id=" . $wishlist_item['book_id'] . "&page=favourites" ?>" class="favourites__link text-decoration-none">
+                  <a href="<?= "app/controller/FrontEnd/Book/remove_from_favourite.php?id=" . $wishlist_item['book_id'] ?>" class="favourites__link text-decoration-none">
                     <span class="favourites__remove m-auto">
                       <i class="fa-solid fa-xmark text-danger"></i>
                     </span>
