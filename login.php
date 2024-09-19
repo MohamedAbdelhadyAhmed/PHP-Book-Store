@@ -32,24 +32,14 @@ include "layouts/nave.php"; ?>
           حساب جديد
         </div>
       </div>
-      <?php
-      if (isset($_SESSION["user_added"])) {
-        echo "<div class='alert alert-danger'>" .  $_SESSION["user_added"] . "</div>";
-      }
-      if (isset(   $_SESSION['email_unique'] )) {
-        foreach ( $_SESSION['email_unique']  as $key => $value) {?>
-                  <div class='alert alert-danger'> <?php echo $_SESSION['email_unique']["$key"] ?> </div>
 
-      <?php   }
-      }
-      ?>
       <!-- login -->
       <div class="account__login w-100">
         <form class="mb-5" action="./app/controller/FrontEnd/Auth/login.php" method="POST">
           <?php
-          if (isset($_SESSION['login_user']['email'])) {
-            echo "<div class='alert alert-danger'>" . $_SESSION['login_user']['email'] . "</div>";
-          }
+          // if (isset($_SESSION['login_user']['email'])) {
+          //   echo "<div class='alert alert-danger'>" . $_SESSION['login_user']['email'] . "</div>";
+          // }
           ?>
           <div class="input-group rounded-1 mb-3">
             <input
@@ -67,9 +57,9 @@ include "layouts/nave.php"; ?>
           </div>
 
           <?php
-          if (isset($_SESSION['login_user']['password'])) {
-            echo "<div class='alert alert-danger'>" . $_SESSION['login_user']['password'] . "</div>";
-          }
+          // if (isset($_SESSION['login_user']['password'])) {
+          //   echo "<div class='alert alert-danger'>" . $_SESSION['login_user']['password'] . "</div>";
+          // }
           ?>
           <div class="input-group rounded-1 mb-3">
             <input
@@ -110,7 +100,6 @@ include "layouts/nave.php"; ?>
             echo "<div class='alert alert-danger'>" . $_SESSION['create_user']['firstname'] . "</div>";
           }
           ?>
-
           <!-- firstname -->
           <div class="input-group rounded-1 mb-3">
             <input
@@ -277,8 +266,6 @@ include "layouts/nave.php"; ?>
 
 <?php
 unset($_SESSION['create_user']);
-unset($_SESSION['login_user']);
-unset($_SESSION["user_added"]);
-unset($_SESSION["email_unique"]);
+// unset($_SESSION['login_user']);
 include "layouts/footer.php"
 ?>
