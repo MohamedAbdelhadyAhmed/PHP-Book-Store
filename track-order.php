@@ -1,6 +1,5 @@
 <?php include "layouts/header.php" ?>
 <?php include "layouts/nave.php" ?>
-<?php include "app/models/Book.php" ?>
 
 <main>
   <section

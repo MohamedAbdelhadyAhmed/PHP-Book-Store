@@ -19,7 +19,6 @@ class config
     }
     public  function runDML(string $query)
     {
-        #code 
         $result  =   $this->conn->query($query);
         if ($result) {
             return true;
