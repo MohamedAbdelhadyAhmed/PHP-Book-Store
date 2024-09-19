@@ -79,6 +79,27 @@
 <script src="assets/js/vendors/owl.carousel.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script src="assets/js/app.js"></script>
+<script>
+    <?php if (isset($_SESSION['cart']['add'])) : ?>
+        alert("<?= $_SESSION['cart']['add'] ?>");
+        <?php unset($_SESSION['cart']['add']); ?>
+    <?php elseif (isset($_SESSION['cart']['remove'])) : ?>
+        alert("<?= $_SESSION['cart']['remove'] ?>");
+        <?php unset($_SESSION['cart']['remove']); ?>
+    <?php elseif (isset($_SESSION['wishlist']['add'])) : ?>
+        alert("<?= $_SESSION['wishlist']['add'] ?>");
+        <?php unset($_SESSION['wishlist']['add']); ?>
+    <?php elseif (isset($_SESSION['wishlist']['remove'])) : ?>
+        alert("<?= $_SESSION['wishlist']['remove'] ?>");
+        <?php unset($_SESSION['wishlist']['remove']); ?>
+    <?php elseif (isset($_SESSION['order']['add'])) : ?>
+        alert("<?= $_SESSION['order']['add'] ?>");
+        <?php unset($_SESSION['order']['add']); ?>
+    <?php elseif (isset($_SESSION['contact']['add'])) : ?>
+        alert("<?= $_SESSION['contact']['add'] ?>");
+        <?php unset($_SESSION['contact']['add']); ?>
+    <?php endif; ?>
+</script>
 </body>
 
 </html>
