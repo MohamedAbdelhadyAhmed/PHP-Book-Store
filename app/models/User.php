@@ -166,7 +166,7 @@ class User extends config implements operations
 
         if ($p->password === (sha1($old_Password))) {
 
-            $query = "UPDATE `admins` SET password = '$this->password' WHERE id = '$this->id' ";
+            $query = "UPDATE `users` SET password = '$this->password' WHERE id = '$this->id' ";
             return $this->runDML($query);
         } else {
             return false;
