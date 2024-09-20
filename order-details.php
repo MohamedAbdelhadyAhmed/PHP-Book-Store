@@ -8,7 +8,8 @@ include "app/models/order.php";
 include "app/models/OrderItem.php";
 $Oredr_Item = new OrderItem();
 if (isset($_POST['id']) && isset($_POST['email'])) {
-  $items = $Oredr_Item->GetOrderItemsbyEmail($_POST['id'], $_SESSION['user']->id, $_POST['email']);
+  $items = $Oredr_Item->GetOrderItemsbyEmail($_POST['id'], $_SESSION['user']->id,
+   $_POST['email']);
   if ($items->num_rows == 0) {
     $_SESSION['errors']['orders'] = "لا يوجد بيانات لهذا الطلب";
     echo "<script>window.history.back()</script>";
@@ -47,7 +48,9 @@ $orders = $order->GetOrder($_GET['id'], $_SESSION['user']->id);
       $shipment_status = $order->shipment_status($_GET['id'], $_SESSION['user']->id);
 
       $progress_percentage = 0;
-      list($shipment_status, $progress_percentage) = $order->GetShipmentStatus($shipment_status, $progress_percentage);
+      list($shipment_status, $progress_percentage) = 
+      $order->GetShipmentStatus($shipment_status, $progress_percentage);
+
       $is_step_1_complete = $progress_percentage >= 25;
       $is_step_2_complete = $progress_percentage >= 50;
       $is_step_3_complete = $progress_percentage >= 75;

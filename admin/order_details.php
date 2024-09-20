@@ -134,28 +134,38 @@ if ($result) {
                     pending
                   </label>
                 </div>
+
                 <div class="icheck-danger d-inline">
-                  <input type="radio" name="status"  id="radioDanger2" 
-                  <?= ($items[0]['status'] == "shipped") ? "checked" : ''; ?> value="shipped">
+                  <input type="radio" name="status" id="radioDanger2"
+                    <?= ($items[0]['status'] == "shipped") ? "checked" : ''; ?> value="shipped">
                   <label for="radioDanger2">
                     shipped
                   </label>
                 </div>
                 <div class="icheck-danger d-inline">
-                  <input type="radio" name="status" id="radioDanger3" 
-                  <?= ($items[0]['status'] == "delivered") ? "checked" : ''; ?> value="delivered">
-                  <input type="hidden" name="order_id" value="<?= (isset($items[0]['order_id'])) ? $items[0]['order_id'] : ''; ?>">
-
+                  <input type="radio" name="status" id="radioDanger3"
+                    <?= ($items[0]['status'] == "out_for_delivery") ? "checked" : ''; ?> 
+                    value="out_for_delivery">
                   <label for="radioDanger3">
+                    Out for delivery
+                  </label>
+                </div>
+                <div class="icheck-danger d-inline">
+                  <input type="radio" name="status" id="radioDanger4"
+                    <?= ($items[0]['status'] == "delivered") ? "checked" : ''; ?> value="delivered">
+                  <input type="hidden" name="order_id"
+                   value="<?= (isset($items[0]['order_id'])) ? $items[0]['order_id'] : ''; ?>">
+
+                  <label for="radioDanger4">
                     delivered
                   </label>
                 </div>
-                
+
               </div>
               <div class="text-center mt-5 mb-3">
-              <input type="submit" class="btn btn-sm btn-warning"   value="Change Order Status">
+                <input type="submit" class="btn btn-sm btn-warning" value="Change Order Status">
 
-               </div>
+              </div>
             </form>
 
 
