@@ -1,5 +1,6 @@
 <?php
 session_start();
+$title = "الصفحة الرئيسية";
 include "layouts/header.php";
 include "layouts/nave.php";
 include "app/models/Book.php";

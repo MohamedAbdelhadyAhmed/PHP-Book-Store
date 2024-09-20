@@ -166,13 +166,47 @@ class User extends config implements operations
 
         if ($p->password === (sha1($old_Password))) {
 
-            $query = "UPDATE `admins` SET password = '$this->password' WHERE id = '$this->id' ";
+            $query = "UPDATE `users` SET password = '$this->password' WHERE id = '$this->id' ";
             return $this->runDML($query);
         } else {
             return false;
         }
     }
-    public function update() {}
-    public function read() {}
+    public function update()
+    {
+        $sql = "UPDATE `users` SET `password` = '$this->password' WHERE `id` = '$this->id'";
+        mysqli_query($this->conn, $sql);
+    }
+    public function read()
+    {
+        $sql = "SELECT * FROM users WHERE id = $this->id";
+        $result = mysqli_query($this->conn, $sql);
+        return mysqli_fetch_assoc($result);
+    }
     public function delete() {}
+
+    public function updateuser()
+    {
+        $sql = "UPDATE `users` SET `first_name` = '$this->first_name', `last_name` = '$this->last_name', `phone` = '$this->phone', `email` = '$this->email' WHERE `id` = '$this->id'";
+        mysqli_query($this->conn, $sql);
+    }
+
+    public function Check($column, $value)
+    {
+        $sql = "SELECT * FROM users WHERE $column = '$value' AND id != $this->id";
+        $result = mysqli_query($this->conn, $sql);
+        if (mysqli_num_rows($result) > 0) {
+            $error[$column] = "This $column already exists";
+            return $error;
+        } else {
+            return null;
+        }
+    }
+
+    public function getuser()
+    {
+        $sql = "SELECT * FROM users WHERE id = $this->id";
+        $result = mysqli_query($this->conn, $sql);
+        return $result->fetch_object();
+    }
 }

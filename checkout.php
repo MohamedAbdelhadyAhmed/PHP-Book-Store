@@ -1,26 +1,19 @@
 <?php
 session_start();
-// print_r($_SESSION['user'] );die;
 include "app/middleware/auth_user.php";
+$title = "تاكيد الطلب";
 include "layouts/header.php";
 include "layouts/nave.php";
 include "app/models/Book.php";
-// include "app/models/Cart.php";
 
 $cart = new Cart();
 $cartItems = $cart->getCartItems($_SESSION['user']->id);
-// print_r($_SESSION['user']);die;
 if (isset($_GET['total_price'])) {
   $total_price = $_GET['total_price'];
 } else {
   header("Location: index.php");
 }
 
-// $user_id = ($_SESSION['user']->id );
-// $conn = mysqli_connect("localhost", "root", "", "book_store2");
-// $sql = "SELECT `users`.*, `addresses`.`city`, `addresses`.`state`, `addresses`.`street`, `addresses`.`id` AS `address_id` FROM `users` INNER JOIN `addresses` ON `users`.`id` = `addresses`.`user_id` WHERE `users`.`id` = $user_id";
-// $result = mysqli_query($conn, $sql);
-// $user = mysqli_fetch_assoc($result);
 ?>
 
 <main>
@@ -32,7 +25,7 @@ if (isset($_GET['total_price'])) {
         <h2>إتمام الطلب</h2>
       </div>
       <div class="page-top__breadcrumb">
-        <a class="text-gray" href="index.php">الرئيسية</a> /
+        <a class="text-primary text-decoration-none" href="index.php">الرئيسية</a> /
         <span class="text-gray">إتمام الطلب</span>
       </div>
     </div>
@@ -45,13 +38,13 @@ if (isset($_GET['total_price'])) {
           <div class="w-50">
             <label for="first_name">الاسم الأول <span class="required">*</span></label>
             <input class="form__input text-dark" type="name" name="first_name" id="first_name"
-             value="<?= $_SESSION['user']->first_name?>" required />
-          <input type="hidden" name="total_price" value="<?php echo $total_price; ?>">
-            </div>
+              value="<?= $_SESSION['user']->first_name ?>" required />
+            <input type="hidden" name="total_price" value="<?php echo $total_price; ?>">
+          </div>
           <div class="w-50">
             <label for="last_name">الاسم الأخير <span class="required">*</span></label>
             <input class="form__input text-dark" type="name" name="last_name" id="last_name"
-             value="<?= $_SESSION['user']->last_name ?>" required />
+              value="<?= $_SESSION['user']->last_name ?>" required />
           </div>
         </div>
         <div class="mb-3">
@@ -61,38 +54,38 @@ if (isset($_GET['total_price'])) {
             placeholder="المدينة / المحافظة"
             type="text"
             name="state"
-            id="state"   required />
+            id="state" required />
         </div>
-      
+
         <div class="mb-3">
-          <label for="street">  ( المنطقة  )<span
+          <label for="street"> ( المنطقة )<span
               class="required">*</span></label>
           <input
             class="form__input text-dark"
             placeholder=" المنطقة"
             type="text"
             name="city"
-            id="street"   required />
+            id="street" required />
         </div>
         <div class="mb-3">
-          <label for="street">  ( الشارع  )<span
+          <label for="street"> ( الشارع )<span
               class="required">*</span></label>
           <input
             class="form__input text-dark"
             placeholder=" المنطقة"
             type="text"
             name="street"
-            id="street"   required />
+            id="street" required />
         </div>
         <div class="mb-3">
           <label for="phone">رقم الهاتف<span class="required">*</span></label>
-          <input class="form__input text-dark" type="number" name="phone" id="phone" 
-          value="<?=$_SESSION['user']->phone ?>" required />
+          <input class="form__input text-dark" type="number" name="phone" id="phone"
+            value="<?= $_SESSION['user']->phone ?>" required />
         </div>
         <div class="mb-3">
           <label for="email">البريد الإلكتروني (اختياري)<span class="required">*</span></label>
           <input class="form__input text-dark" type="email" name="email" id="email"
-           value="<?= $_SESSION['user']->email ?>" required />
+            value="<?= $_SESSION['user']->email ?>" required />
         </div>
         <div class="mb-3">
           <h2>معلومات اضافية</h2>

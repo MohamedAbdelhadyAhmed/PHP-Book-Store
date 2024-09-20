@@ -1,5 +1,6 @@
 <?php
 session_start();
+$title = "المتجر - جميع الكتب";
 include "layouts/header.php";
 include "layouts/nave.php";
 include "app/models/Book.php";
@@ -31,7 +32,7 @@ if (isset($_GET['lang'])) {
         <h2>المتجر</h2>
       </div>
       <div class="page-top__breadcrumb">
-        <a class="text-gray text-decoration-none" href="index.php">الرئيسية</a> /
+        <a class="text-primary text-decoration-none" href="index.php">الرئيسية</a> /
         <span class="text-gray">المتجر</span>
       </div>
     </div>
@@ -125,7 +126,6 @@ if (isset($_GET['lang'])) {
           </div>
         <?php endwhile; ?>
       </div>
-
     </div>
   </div>
 </main>

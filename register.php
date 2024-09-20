@@ -1,9 +1,10 @@
 <?php
 session_start();
 include "app/middleware/guest_user.php";
+$title = "حساب جديد";
 include "layouts/header.php";
 include "layouts/nave.php";
- 
+
 
 ?>
 
@@ -15,7 +16,7 @@ include "layouts/nave.php";
         <h2>حساب جديد</h2>
       </div>
       <div class="page-top__breadcrumb">
-        <a class="text-gray" href="index.html">الرئيسية</a> /
+        <a class="text-primary text-decoration-none" href="index.html">الرئيسية</a> /
         <span class="text-gray">حساب جديد</span>
       </div>
     </div>

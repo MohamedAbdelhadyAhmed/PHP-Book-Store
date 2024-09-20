@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "app/middleware/auth_user.php";
+$title = "تفاصيل الطلب";
 include "layouts/header.php";
 include "layouts/nave.php";
 include "app/models/order.php";
@@ -35,7 +36,7 @@ $orders = $order->GetOrder($_GET['id'], $_SESSION['user']->id);
         </h2>
       </div>
       <div class="page-top__breadcrumb">
-        <a class="text-gray" href="index.php">الرئيسية</a> /
+        <a class="text-primary text-decoration-none" href="index.php">الرئيسية</a> /
         <span class="text-gray">تفاصيل الطلب</span>
       </div>
     </div>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+$title = "login";
 // include "app/middleware/auth.php";
 include "layouts/header.php";
 include "layouts/nave.php"; ?>
@@ -14,7 +15,7 @@ include "layouts/nave.php"; ?>
         <h2>حسابي</h2>
       </div>
       <div class="page-top__breadcrumb">
-        <a class="text-gray" href="index.html">الرئيسية</a> /
+        <a class="text-primary text-decoration-none" href="index.php">الرئيسية</a> /
         <span class="text-gray">حسابي</span>
       </div>
     </div>
@@ -36,9 +37,9 @@ include "layouts/nave.php"; ?>
       if (isset($_SESSION["user_added"])) {
         echo "<div class='alert alert-danger'>" .  $_SESSION["user_added"] . "</div>";
       }
-      if (isset(   $_SESSION['email_unique'] )) {
-        foreach ( $_SESSION['email_unique']  as $key => $value) {?>
-                  <div class='alert alert-danger'> <?php echo $_SESSION['email_unique']["$key"] ?> </div>
+      if (isset($_SESSION['email_unique'])) {
+        foreach ($_SESSION['email_unique']  as $key => $value) { ?>
+          <div class='alert alert-danger'> <?php echo $_SESSION['email_unique']["$key"] ?> </div>
 
       <?php   }
       }

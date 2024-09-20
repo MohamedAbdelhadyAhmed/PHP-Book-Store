@@ -1,9 +1,10 @@
 <?php
 session_start();
 include "app/middleware/auth_user.php";
+$title = "تتبع طلبك";
 include "layouts/header.php";
 include "layouts/nave.php";
- 
+
 
 ?>
 
@@ -16,7 +17,7 @@ include "layouts/nave.php";
         <h2>تتبع طلبك</h2>
       </div>
       <div class="page-top__breadcrumb">
-        <a class="text-gray" href="index.php">الرئيسية</a> /
+        <a class="text-primary text-decoration-none" href="index.php">الرئيسية</a> /
         <span class="text-gray">تتبع طلبك</span>
       </div>
     </div>

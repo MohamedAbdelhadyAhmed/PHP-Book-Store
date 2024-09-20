@@ -1,6 +1,7 @@
 <?php
 session_start();
-include "app/middleware/auth _user.php";
+include "app/middleware/auth_user.php";
+$title = "حسابي - " . $_SESSION['user']->first_name . " " . $_SESSION['user']->last_name;
 include "layouts/header.php";
 include "layouts/nave.php";
 
@@ -15,7 +16,7 @@ include "layouts/nave.php";
         <h2>حسابي</h2>
       </div>
       <div class="page-top__breadcrumb">
-        <a class="text-gray" href="index.php">الرئيسية</a> /
+        <a class="text-primary text-decoration-none" href="index.php">الرئيسية</a> /
         <span class="text-gray">حسابي</span>
       </div>
     </div>
@@ -28,24 +29,25 @@ include "layouts/nave.php";
         <div class="profile__user-img rounded-circle overflow-hidden">
           <img class="w-100" src="assets/images/user.png" alt="" />
         </div>
-        <div class="profile__user-name">moamenyt</div>
+        <div class="profile__user-name"><?= $_SESSION['user']->first_name . " " . $_SESSION['user']->last_name  ?></div>
       </div>
       <ul class="profile__tabs list-unstyled ps-3">
-        <li class="profile__tab">
+        <li class="profile__tab active">
           <a
             class="py-2 px-3 text-black text-decoration-none"
-            href="profile.php">لوحة التحكم</a>
+            href="account_details.php">
+            تفاصيل الحساب
+          </a>
         </li>
         <li class="profile__tab">
           <a
             class="py-2 px-3 text-black text-decoration-none"
             href="orders.php">الطلبات</a>
         </li>
-
-        <li class="profile__tab active">
-          <a
-            class="py-2 px-3 text-black text-decoration-none"
-            href="account_details.php">تفاصيل الحساب</a>
+        <li class="profile__tab">
+          <a class="py-2 px-3 text-black text-decoration-none" href="cart.php">
+            السلة
+          </a>
         </li>
         <li class="profile__tab">
           <a
@@ -59,45 +61,61 @@ include "layouts/nave.php";
     </div>
     <div class="profile__left mt-4 mt-md-0 w-100">
       <div class="profile__tab-content active">
-        <form class="profile__form border p-3" action="">
+        <form class="profile__form border p-3" action="./app/controller/FrontEnd/Auth/profile.php" method="POST">
+          <?php
+          if (isset($_SESSION['user_profile_updated'])) {
+            echo "<div class='alert alert-success'>" . $_SESSION['user_profile_updated'] . "</div>";
+          }
+          ?>
           <div class="d-flex gap-3 mb-3">
             <div class="w-100">
               <label class="fw-bold mb-2" for="first-name">
                 الاسم الاول <span class="required">*</span>
               </label>
-              <input type="text" class="form__input" id="first-name"
-                value="<?= $_SESSION['user']->first_name ?>" />
+              <input type="text" name="first_name" class="form__input" id="first-name"
+                value="<?= $_SESSION['user']->first_name ?>" required />
             </div>
             <div class="w-100">
               <label class="fw-bold mb-2" for="last-name">
                 الاسم الأخير <span class="required">*</span>
               </label>
-              <input type="text" class="form__input" id="last-name"
-                value="<?= $_SESSION['user']->last_name ?>" />
+              <input type="text" name="last_name" class="form__input" id="last-name"
+                value="<?= $_SESSION['user']->last_name ?>" required />
             </div>
           </div>
+          <?php
+          if (isset($_SESSION['errors']['phone'])) {
+            echo "<div class='alert alert-danger'>" . $_SESSION['errors']['phone'] . "</div>";
+          }
+          ?>
           <div class="w-100">
             <label class="fw-bold mb-2" for="displayed-name">
               رقم الهاتف <span class="required">*</span>
             </label>
-            <input type="text" class="form__input" id="displayed-name"
-              value="<?= $_SESSION['user']->phone ?>" />
+            <input type="text" name="phone" class="form__input" id="displayed-name"
+              value="<?= $_SESSION['user']->phone ?>" required />
           </div>
+          <?php
+          if (isset($_SESSION['errors']['email'])) {
+            echo "<div class='alert alert-danger'>" . $_SESSION['errors']['email'] . "</div>";
+          }
+          ?>
           <div class="w-100 mb-3">
             <label class="fw-bold mb-2" for="email">
               البريد الالكتروني<span class="required">*</span>
             </label>
-            <input type="text" class="form__input" id="email"
-              value="<?= $_SESSION['user']->email ?>" />
+            <input type="text" name="email" class="form__input" id="email"
+              value="<?= $_SESSION['user']->email ?>" required />
           </div>
-          <!-- <button class="primary-button">تعديل</button> -->
+          <button class="primary-button" type="submit">تعديل</button>
         </form>
-        <?php
-              if (isset($_SESSION['user_password_updated'])) {
-                echo "<div class='alert alert-success'>" . $_SESSION['user_password_updated'] . "</div>";
-              }
-              ?>
+
         <form class="mb-5" action="./app/controller/FrontEnd/Auth/change_password.php" method="POST">
+          <?php
+          if (isset($_SESSION['user_password_updated'])) {
+            echo "<div class='alert alert-success'>" . $_SESSION['user_password_updated'] . "</div>";
+          }
+          ?>
           <fieldset>
             <legend class="fw-bolder">تغيير كلمة المرور</legend>
             <div class="w-100 mb-3">
@@ -142,7 +160,10 @@ include "layouts/nave.php";
     </div>
   </section>
 </main>
-<?php 
+<?php
+unset($_SESSION['user_profile_updated']);
+unset($_SESSION['errors']['phone']);
+unset($_SESSION['errors']['email']);
 unset($_SESSION['user_password_updated']);
 unset($_SESSION['password_user']);
 include "layouts/footer.php" ?>

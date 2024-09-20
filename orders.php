@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "app/middleware/auth_user.php";
+$title = "طلباتي";
 include "layouts/header.php";
 include "layouts/nave.php";
 include "app/models/Order.php";
@@ -15,7 +16,7 @@ $orders = $order->get_orders($_SESSION['user']->id);
         <h2>حسابي</h2>
       </div>
       <div class="page-top__breadcrumb">
-        <a class="text-gray" href="index.php">الرئيسية</a> /
+        <a class="text-primary text-decoration-none" href="index.php">الرئيسية</a> /
         <span class="text-gray">حسابي</span>
       </div>
     </div>
@@ -27,17 +28,19 @@ $orders = $order->get_orders($_SESSION['user']->id);
         <div class="profile__user-img rounded-circle overflow-hidden">
           <img class="w-100" src="assets/images/user.png" alt="">
         </div>
-        <div class="profile__user-name">moamenyt</div>
+        <div class="profile__user-name"><?= $_SESSION['user']->first_name . " " . $_SESSION['user']->last_name  ?></div>
       </div>
       <ul class="profile__tabs list-unstyled ps-3">
         <li class="profile__tab">
-          <a class="py-2 px-3 text-black text-decoration-none" href="profile.php">لوحة التحكم</a>
+          <a class="py-2 px-3 text-black text-decoration-none" href="account_details.php">تفاصيل الحساب</a>
         </li>
         <li class="profile__tab active">
           <a class="py-2 px-3 text-black text-decoration-none" href="orders.php">الطلبات</a>
         </li>
         <li class="profile__tab">
-          <a class="py-2 px-3 text-black text-decoration-none" href="account_details.php">تفاصيل الحساب</a>
+          <a
+            class="py-2 px-3 text-black text-decoration-none"
+            href="cart.php">السلة</a>
         </li>
         <li class="profile__tab">
           <a class="py-2 px-3 text-black text-decoration-none" href="favourites.php">المفضلة</a>
@@ -53,7 +56,7 @@ $orders = $order->get_orders($_SESSION['user']->id);
           <div class="orders__none d-flex justify-content-between align-items-center py-3 px-4">
             <p class="m-0">لم يتم تنفيذ اي طلب بعد.</p>
             <!-- <button class="primary-button">تصفح المنتجات</button> -->
-            <a  class="primary-button " style="text-decoration: none;"   href="shop.php">تصفح المنتجات</a>
+            <a class="primary-button " style="text-decoration: none;" href="shop.php">تصفح المنتجات</a>
           </div>
         <?php else: ?>
           <table class="orders__table w-100">
