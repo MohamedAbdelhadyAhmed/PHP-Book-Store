@@ -1,5 +1,6 @@
 <?php
 session_start();
+$title = "تفاصيل المنتج";
 include "layouts/header.php";
 include "layouts/nave.php";
 include "app/models/Book.php";

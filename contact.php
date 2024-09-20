@@ -1,10 +1,11 @@
 <?php
 session_start();
 include "app/middleware/auth_user.php";
+$title = "تواصل معنا";
 include "layouts/header.php";
 include "layouts/nave.php";
- 
- 
+
+
 ?>
 <main>
   <section class="page-top d-flex justify-content-center align-items-center flex-column text-center ">
@@ -14,7 +15,7 @@ include "layouts/nave.php";
         <h2>تواصل معنا</h2>
       </div>
       <div class="page-top__breadcrumb">
-        <a class="text-gray" href="index.php">الرئيسية</a> /
+        <a class="text-primary text-decoration-none" href="index.php">الرئيسية</a> /
         <span class="text-gray">تواصل معنا</span>
       </div>
     </div>

@@ -1,9 +1,10 @@
 <?php
 session_start();
 include "app/middleware/guest_user.php";
+$title = "تسجيل الدخول";
 include "layouts/header.php";
 include "layouts/nave.php";
- 
+
 
 ?>
 
@@ -15,7 +16,7 @@ include "layouts/nave.php";
         <h2>تسجيل الدخول</h2>
       </div>
       <div class="page-top__breadcrumb">
-        <a class="text-gray" href="index.html">الرئيسية</a> /
+        <a class="text-primary text-decoration-none" href="index.php">الرئيسية</a> /
         <span class="text-gray">تسجيل الدخول</span>
       </div>
     </div>
@@ -40,7 +41,7 @@ include "layouts/nave.php";
             echo "<div class='alert alert-danger'>" . $_SESSION['login_user']['password'] . "</div>";
           }
           ?>
-          
+
           <div class="input-group rounded-1 mb-3">
             <input type="password" name="password" class="form-control p-3" placeholder="كلمة السر" aria-label="Password" />
             <span class="input-group-text login__input-icon"><i class="fa-solid fa-key"></i></span>

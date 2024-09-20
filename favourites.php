@@ -1,8 +1,9 @@
 <?php
 session_start();
 include "app/middleware/auth_user.php";
+$title = "المفضلة";
 include "layouts/header.php";
- include "layouts/nave.php";
+include "layouts/nave.php";
 include "app/models/Book.php";
 
 
@@ -23,7 +24,7 @@ if (isset($_SESSION['user'])) {
         <h2>المفضلة</h2>
       </div>
       <div class="page-top__breadcrumb">
-        <a class="text-gray" href="index.php">الرئيسية</a> /
+        <a class="text-primary text-decoration-none" href="index.php">الرئيسية</a> /
         <span class="text-gray">المفضلة</span>
       </div>
     </div>

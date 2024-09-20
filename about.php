@@ -1,3 +1,4 @@
+<?php $title = "من نحن" ?>
 <?php include "layouts/header.php" ?>
 <?php include "layouts/nave.php" ?>
 
@@ -10,7 +11,7 @@
         <h2>من نحن</h2>
       </div>
       <div class="page-top__breadcrumb">
-        <a class="text-gray" href="index.php">الرئيسية</a> /
+        <a class="text-primary text-decoration-none" href="index.php">الرئيسية</a> /
         <span class="text-gray">من نحن</span>
       </div>
     </div>
