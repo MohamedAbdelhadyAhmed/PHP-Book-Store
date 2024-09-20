@@ -98,7 +98,8 @@ class Order  extends config implements operations
         }
         return false;
     }
-    public function update() {
+    public function update()
+    {
         $sql  = "UPDATE `orders` SET  `status`='$this->status'  WHERE `id`='$this->id'";
         return $this->runDML($sql);
     }
@@ -167,11 +168,11 @@ class Order  extends config implements operations
                 $shipment_status = "تم الشحن";
                 $progress_percentage = 50;
                 break;
-            case "delivered":
+            case "out_for_delivery":
                 $shipment_status = "خرج للتوصيل";
                 $progress_percentage = 75;
                 break;
-            case "canceled":
+            case "delivered":
                 $shipment_status = "تم التوصيل";
                 $progress_percentage = 100;
                 break;
