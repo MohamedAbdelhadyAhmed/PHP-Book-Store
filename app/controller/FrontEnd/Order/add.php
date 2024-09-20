@@ -4,6 +4,7 @@ include_once __DIR__ . "/../../../models/Order.php";
 include_once __DIR__ . "/../../../models/OrderItem.php";
 include_once __DIR__ . "/../../../models/Cart.php";
 include_once __DIR__ . "/../../../models/Address.php";
+include_once __DIR__ . "/../../../models/Book.php";
 
 $Order = new Order();
 
@@ -59,7 +60,9 @@ if ($_POST) {
             foreach ($cart_items as   $item) {
                 // print_r($item['book_id']);die;
                 $order_itemsObject = new OrderItem();
-
+                $Book = new Book();
+                $Book->setId($item['book_id']);
+                $Book->update();
                 $order_itemsObject->setOrderId($order_id);
                 $order_itemsObject->setBookId($item['book_id']);
                 $order_itemsObject->setQuantity($item['quantity']);
@@ -67,7 +70,7 @@ if ($_POST) {
                 $result = $order_itemsObject->create();
             }
             $cart_remove =  $cart->removeAllFromCart($user_id);
-      
+
             if ($cart_remove) {
                 $_SESSION['order']['add'] = "تم اضافة الطلب بنجاح";
                 header("location: ../../../../order-recieved.php?id=$order_id");

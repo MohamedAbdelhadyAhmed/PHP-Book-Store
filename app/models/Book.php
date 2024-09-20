@@ -161,7 +161,11 @@ class Book  extends config implements operations
 
     return $this->runDML($sql);
   }
-  public function update() {}
+  public function update()
+  {
+    $sql = "UPDATE `books` SET `top_selling` = `top_selling` + 1 WHERE `id` = '$this->id'";
+    mysqli_query($this->conn, $sql);
+  }
   public function read()
   {
     // $sql  = "SELECT * FROM `books`";
