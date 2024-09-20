@@ -37,29 +37,29 @@ if (isset($_SESSION['user'])) {
       </button>
     </form>
     <ul class="nav__links gap-3 list-unstyled d-none d-lg-flex m-0">
-  <?php if (isset($_SESSION['user'])) {?>
-      <li class="nav__link">
-        <a class="d-flex align-items-center gap-2" href="account_details.php">
-          Profile
-          <i class="fa-regular fa-user"></i>
-        </a>
-      </li>
-      <?php } else {?>
+      <?php if (isset($_SESSION['user'])) { ?>
         <li class="nav__link">
-        <a class="d-flex align-items-center gap-2" href="login.php">
-          تسجيل الدخول
-          <i class="fa-regular fa-user"></i>
-        </a>
-      </li>
+          <a class="d-flex align-items-center gap-2" href="account_details.php">
+            <?= $_SESSION['user']->first_name . " " . $_SESSION['user']->last_name  ?>
+            <i class="fa-regular fa-user"></i>
+          </a>
+        </li>
+      <?php } else { ?>
+        <li class="nav__link">
+          <a class="d-flex align-items-center gap-2" href="login.php">
+            تسجيل الدخول
+            <i class="fa-regular fa-user"></i>
+          </a>
+        </li>
       <?php } ?>
-      
+
       <li class="nav__link">
         <a class="d-flex align-items-center gap-2" href="favourites.php">
           المفضلة
           <div class="position-relative">
             <i class="fa-regular fa-heart"></i>
             <div class="nav__link-floating-icon">
-            <?php if (isset($wishlistItems) && $wishlistItems->num_rows > 0) {
+              <?php if (isset($wishlistItems) && $wishlistItems->num_rows > 0) {
                 echo $wishlistItems->num_rows;
               } else {
                 echo 0;

@@ -6,7 +6,7 @@
                 <div class="footer__logo">
                     <img class="w-100" src="assets/images/logo.png" alt="">
                 </div>
-                <p class="my-3 text-gray">شركتنا هي أكبر شركة متخصصة لبيع الاحذية أونلاين وتوصيلها حتي المنزل.</p>
+                <p class="my-3 text-gray">شركتنا هي أكبر شركة متخصصة لبيع الكتب أونلاين وتوصيلها حتي المنزل.</p>
                 <div class="footer__social d-flex gap-3">
                     <a href=""><i class="fa-brands fa-facebook fa-2x text-white"></i></a>
                     <a href=""><i class="fa-brands fa-instagram fa-2x text-white"></i></a>
@@ -23,7 +23,7 @@
                     <li><a class="footer__link text-decoration-none d-inline-block text-gray py-1" href="privacy-policy.php">سياسة الخصوصية</a></li>
                     <li><a class="footer__link text-decoration-none d-inline-block text-gray py-1" href="refund-policy.php">سياسة الاستبدال و
                             الاسترجاع</a></li>
-                    <li><a class="footer__link text-decoration-none d-inline-block text-gray py-1" href="track-order.php">تتبع طلبك</a></li>
+                    <!-- <li><a class="footer__link text-decoration-none d-inline-block text-gray py-1" href="track-order.php">تتبع طلبك</a></li> -->
                 </div>
             </div>
             <div class="col-md-6 col-lg-3 px-md-4 mb-5 mb-lg-0">
@@ -51,7 +51,7 @@
                         <div class="text-gray">coding.arabic@gmail.com</div>
                     </div>
                 </div>
-                <div>
+                <!-- <div>
                     <div class="footer__list-title fw-bolder mb-3">
                         اشترك في نشرتنا
                     </div>
@@ -63,7 +63,7 @@
                             class="footer__submit mx-3 position-absolute top-50 translate-middle-y end-0 bg-transparent border-0 text-white d-flex align-items-center"><i
                                 class="fa-solid fa-paper-plane"></i></button>
                     </form>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

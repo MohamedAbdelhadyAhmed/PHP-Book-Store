@@ -67,10 +67,10 @@ include "../app/middleware/guest.php";
           <div class="row">
             <div class="col-8">
               <div class="icheck-primary">
-                <input type="checkbox" name="remember" id="remember">
+                <!-- <input type="checkbox" name="remember" id="remember">
                 <label for="remember">
                   Remember Me
-                </label>
+                </label> -->
               </div>
             </div>
             <!-- /.col -->

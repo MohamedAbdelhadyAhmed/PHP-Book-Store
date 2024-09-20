@@ -52,7 +52,8 @@ $orders = $order->get_orders($_SESSION['user']->id);
         <?php if ($orders->num_rows == 0):  ?>
           <div class="orders__none d-flex justify-content-between align-items-center py-3 px-4">
             <p class="m-0">لم يتم تنفيذ اي طلب بعد.</p>
-            <button class="primary-button">تصفح المنتجات</button>
+            <!-- <button class="primary-button">تصفح المنتجات</button> -->
+            <a  class="primary-button " style="text-decoration: none;"   href="shop.php">تصفح المنتجات</a>
           </div>
         <?php else: ?>
           <table class="orders__table w-100">
