@@ -1,11 +1,11 @@
 <?php
 session_start();
+include "app/middleware/auth_user.php";
 include "layouts/header.php";
 include "layouts/nave.php";
 include "app/models/Order.php";
-
 $order = new Order();
-$orders = $order->get_orders($_SESSION['user']['id'] ?? 1);
+$orders = $order->get_orders($_SESSION['user']->id);
 ?>
 <main>
   <section class="page-top d-flex justify-content-center align-items-center flex-column text-center ">

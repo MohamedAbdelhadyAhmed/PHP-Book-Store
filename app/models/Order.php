@@ -10,6 +10,7 @@ class Order  extends config implements operations
     private $userId;
     private $addressId;
     private $status;
+    private $total_amount;
     private $createdAt;
     private $updatedAt;
 
@@ -66,10 +67,46 @@ class Order  extends config implements operations
     {
         $this->updatedAt = $updatedAt;
     }
+    /**
+     * Get the value of total_amount
+     */
+    public function getTotal_amount()
+    {
+        return $this->total_amount;
+    }
+
+    /**
+     * Set the value of total_amount
+     *
+     * @return  self
+     */
+    public function setTotal_amount($total_amount)
+    {
+        $this->total_amount = $total_amount;
+
+        return $this;
+    }
     //================================ Functions Here =====================================================
-    public  function create() {}
-    public function update() {}
-    public function read() {}
+    public  function create()
+    {
+        $sql = "INSERT INTO `orders` (`user_id`, `shipping_address_id`, `total_amount`)
+         VALUES ($this->userId, $this->addressId, $this->total_amount)";
+        $result  =   $this->conn->query($sql);
+        if ($result) {
+            $last_id = $this->conn->insert_id;
+            return  $last_id;
+        }
+        return false;
+    }
+    public function update() {
+        $sql  = "UPDATE `orders` SET  `status`='$this->status'  WHERE `id`='$this->id'";
+        return $this->runDML($sql);
+    }
+    public function read()
+    {
+        $query = "SELECT orders.total_amount, orders.id, users.first_name, users.last_name  FROM orders  INNER JOIN users ON orders.user_id = users.id ";
+        return $this->runDQL($query);
+    }
     public function delete() {}
 
     public function add_order($user_id, $address_id, $total)

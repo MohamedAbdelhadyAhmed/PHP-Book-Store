@@ -122,7 +122,10 @@ class Contact  extends config implements operations
         mysqli_query($this->conn, $sql);
     }
     public function update() {}
-    public function read() {}
+    public function read() {
+        $query = "SELECT * FROM `contacts`  ORDER BY `created_at` ";
+        return $this->runDQL($query);
+    }
     public function delete() {}
 
     public function ValidateName($name)

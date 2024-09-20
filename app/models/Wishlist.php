@@ -59,9 +59,12 @@ class Wishlist  extends config implements operations
     //================================ Functions Here =====================================================
     public  function create() {}
     public function update() {}
-    public function read() {}
+    
     public function delete() {}
-
+    public function read() {
+        $sql = "SELECT * FROM `wishlists` WHERE `user_id` =$this->userId AND `book_id` =$this->bookId";
+       return $this->runDQL( $sql);
+    }
     public function addToWishlist($bookId, $userId)
     {
         $sql = "INSERT INTO `wishlists` (`book_id`, `user_id`) VALUES ($bookId, $userId)";

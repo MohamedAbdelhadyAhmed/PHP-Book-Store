@@ -77,15 +77,43 @@ class OrderItem  extends config implements operations
         $this->updatedAt = $updatedAt;
     }
     //================================ Functions Here =====================================================
-    public  function create() {}
+    public  function create()
+    {
+
+        $query = "INSERT INTO `order_items` (`order_id`, `book_id`, `quantity`, `price`) 
+         VALUES ($this->orderId, $this->bookId, $this->quantity, $this->price )";
+        return $this->runDML($query);
+    }
     public function update() {}
-    public function read() {}
+    public function read()
+    {
+        // $query = "SELECT `order_items`.*, `books`.`title`, `books`.`offer`, `orders`.`status`, `orders`.`total_amount`,`addresses`.`not`,`addresses`.CONCAT(`city`, ', ', `state`, ', ', `street`) AS full_address FROM `order_items` 
+        // INNER JOIN `books` ON `order_items`.`book_id` = `books`.`id` 
+        // INNER JOIN `orders` ON `order_items`.`order_id` = `orders`.`id` 
+        // INNER JOIN `addresses` ON `addresses`.`id` = `orders`.`shipping_address_id` 
+        // WHERE `order_items`.`order_id` = $this->orderId";
+        $query = "SELECT `order_items`.*, 
+                 `books`.`title`, 
+                 `books`.`offer`, 
+                 `orders`.`status`, 
+                 `orders`.`total_amount`, 
+                 `addresses`.`not`, 
+                 CONCAT(`addresses`.`city`, ', ', `addresses`.`state`, ', ', `addresses`.`street`) AS full_address 
+          FROM `order_items` 
+          INNER JOIN `books` ON `order_items`.`book_id` = `books`.`id` 
+          INNER JOIN `orders` ON `order_items`.`order_id` = `orders`.`id` 
+          INNER JOIN `addresses` ON `addresses`.`id` = `orders`.`shipping_address_id` 
+          WHERE `order_items`.`order_id` = $this->orderId";
+
+        return $this->runDQL($query);
+    }
     public function delete() {}
 
     public function add_order_item($order_id, $book_id, $quantity, $price, $user_id)
     {
         $conn = mysqli_connect("localhost", "root", "", "book_store2");
-        $sql = "INSERT INTO `order_items` (`order_id`, `book_id`, `quantity`, `price`, `user_id`) VALUES ($order_id, $book_id, $quantity, $price, $user_id)";
+        $sql = "INSERT INTO `order_items` (`order_id`, `book_id`, `quantity`, `price`)
+         VALUES ($order_id, $book_id, $quantity, $price, $user_id)";
         $result = mysqli_query($conn, $sql);
     }
 

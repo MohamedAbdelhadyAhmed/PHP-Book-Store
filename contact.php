@@ -1,12 +1,10 @@
 <?php
 session_start();
+include "app/middleware/auth_user.php";
 include "layouts/header.php";
 include "layouts/nave.php";
-$conn = mysqli_connect('localhost', 'root', '', 'book_store2');
-$user_id = $_SESSION['user']['id'] ?? 1;
-$sql = "SELECT * FROM users WHERE id = $user_id";
-$user = mysqli_query($conn, $sql);
-$user = mysqli_fetch_assoc($user);
+ 
+ 
 ?>
 <main>
   <section class="page-top d-flex justify-content-center align-items-center flex-column text-center ">
@@ -79,23 +77,23 @@ $user = mysqli_fetch_assoc($user);
         <div class="d-flex gap-3 mb-3">
           <div class="w-50">
             <label for="first_name">الاسم الاول<span class="required">*</span></label>
-            <input class="contact__input text-end" type="text" id="first_name" name="first_name" placeholder="الاسم الاول" value="<?= $user['first_name'] ?>" required>
+            <input class="contact__input text-end" type="text" id="first_name" name="first_name" placeholder="الاسم الاول" value="<?= $_SESSION['user']->first_name ?>" required>
             <h5 class="text-end text-danger"><?= $_SESSION['error']['contact']['name'] ?? '' ?></h5>
           </div>
           <div class="w-50">
             <label for="last_name">الاسم الثاني<span class="required">*</span></label>
-            <input class="contact__input text-end" type="text" id="last_name" name="last_name" placeholder="الاسم الثاني" value="<?= $user['last_name'] ?>" required>
+            <input class="contact__input text-end" type="text" id="last_name" name="last_name" placeholder="الاسم الثاني" value="<?= $_SESSION['user']->last_name ?>" required>
             <h5 class="text-end text-danger"><?= $_SESSION['error']['contact']['name'] ?? '' ?></h5>
           </div>
         </div>
         <div class="mb-3">
           <label for="phone">رقم الهاتف<span class="required">*</span></label>
-          <input class="contact__input" type="number" id="phone" name="phone" placeholder="رقم الهاتف" value="<?= $user['phone'] ?>" required>
+          <input class="contact__input" type="number" id="phone" name="phone" placeholder="رقم الهاتف" value="<?= $_SESSION['user']->phone ?>" required>
           <h5 class="text-end text-danger"><?= $_SESSION['error']['contact']['phone'] ?? '' ?></h5>
         </div>
         <div class="mb-3">
           <label for="email">البريد الالكتروني<span class="required">*</span></label>
-          <input class="contact__input" type="email" id="email" name="email" placeholder="البريد الالكتروني" value="<?= $user['email'] ?>" required>
+          <input class="contact__input" type="email" id="email" name="email" placeholder="البريد الالكتروني" value="<?= $_SESSION['user']->email ?>" required>
           <h5 class="text-end text-danger"><?= $_SESSION['error']['contact']['email'] ?? '' ?></h5>
         </div>
         <div class="mb-3">

@@ -7,7 +7,7 @@ if (isset($_GET['id'])) {
 
     $id = $_GET['id'];
     $cart = new Cart();
-    $cart->removeFromCart($id, ($_SESSION['user']['id'] ?? 1));
+    $cart->removeFromCart($id, ($_SESSION['user']->id));
     $_SESSION['cart']['remove'] = "removed from cart successfully";
 }
 

@@ -3,11 +3,15 @@ session_start();
 include "layouts/header.php";
 include "layouts/nave.php";
 include "app/models/Book.php";
+include "app/models/visitor.php";
+$visitor = new visitor();
+$visitor->create();
+
 $bookObject = new Book();
 $books_top_sell = $bookObject->GettopSellingBooks();
 $books_offer = $bookObject->GetBooksWithOffer();
 $books_new = $bookObject->GetNewBooks();
-$wishlist = new Wishlist();
+
 ?>
 
 <!-- Page Content Start -->
@@ -73,16 +77,11 @@ $wishlist = new Wishlist();
             <?php endif; ?>
             <div
               class="product__favourite position-absolute top-0 end-0 m-1 rounded-circle d-flex justify-content-center align-items-center bg-white">
-              <?php $book_in_wishlist = $wishlist->checkWishlistbyBookId($book['id'], ($_SESSION['user_id'] ?? 1)); ?>
-              <?php if ($book_in_wishlist->num_rows > 0) : ?>
-                <a href="<?= "app/controller/FrontEnd/Book/remove_from_favourite.php?id=" . $book['id'] ?>" class="text-decoration-none text-dark">
-                  <i class="fa-solid fa-heart text-danger"></i>
-                </a>
-              <?php else : ?>
-                <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id'] ?>" class="text-decoration-none text-dark">
-                  <i class="fa-regular fa-heart"></i>
-                </a>
-              <?php endif; ?>
+
+              <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id'] ?>" class="text-decoration-none text-dark">
+                <i class="fa-regular fa-heart"></i>
+              </a>
+
             </div>
           </div>
           <br>
@@ -167,16 +166,10 @@ $wishlist = new Wishlist();
             <?php endif; ?>
             <div
               class="product__favourite position-absolute top-0 end-0 m-1 rounded-circle d-flex justify-content-center align-items-center bg-white">
-              <?php $book_in_wishlist = $wishlist->checkWishlistbyBookId($book['id'], ($_SESSION['user_id'] ?? 1)); ?>
-              <?php if ($book_in_wishlist->num_rows > 0) : ?>
-                <a href="<?= "app/controller/FrontEnd/Book/remove_from_favourite.php?id=" . $book['id'] ?>" class="text-decoration-none text-dark">
-                  <i class="fa-solid fa-heart text-danger"></i>
-                </a>
-              <?php else : ?>
-                <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id'] ?>" class="text-decoration-none text-dark">
-                  <i class="fa-regular fa-heart"></i>
-                </a>
-              <?php endif; ?>
+              <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id'] ?>" class="text-decoration-none text-dark">
+                <i class="fa-regular fa-heart"></i>
+              </a>
+
             </div>
           </div>
           <br>
@@ -240,16 +233,11 @@ $wishlist = new Wishlist();
             <?php endif; ?>
             <div
               class="product__favourite position-absolute top-0 end-0 m-1 rounded-circle d-flex justify-content-center align-items-center bg-white">
-              <?php $book_in_wishlist = $wishlist->checkWishlistbyBookId($book['id'], ($_SESSION['user_id'] ?? 1)); ?>
-              <?php if ($book_in_wishlist->num_rows > 0) : ?>
-                <a href="<?= "app/controller/FrontEnd/Book/remove_from_favourite.php?id=" . $book['id'] ?>" class="text-decoration-none text-dark">
-                  <i class="fa-solid fa-heart text-danger"></i>
-                </a>
-              <?php else : ?>
-                <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id'] ?>" class="text-decoration-none text-dark">
-                  <i class="fa-regular fa-heart"></i>
-                </a>
-              <?php endif; ?>
+
+              <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id'] ?>" class="text-decoration-none text-dark">
+                <i class="fa-regular fa-heart"></i>
+              </a>
+
             </div>
           </div>
           <br>

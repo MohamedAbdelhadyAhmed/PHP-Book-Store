@@ -70,11 +70,19 @@ class Cart  extends config implements operations
 
     public function create()
     {
-        $sql = "INSERT INTO `cart`(`user_id`, `book_id`, `quantity`) VALUES ($this->userId, $this->bookId, $this->quantity)";
-        return $this->conn->query($sql);
+        $sql = "INSERT INTO `cart`(`user_id`, `book_id`, `quantity`)
+         VALUES ($this->userId, $this->bookId, $this->quantity)";
+        return $this->runDML($sql);
+        // return $this->conn->query($sql);
     }
 
-    public function read() {}
+    public function read()
+    {
+        $sql = "SELECT cart.book_id,cart.quantity,  books.price FROM `cart` 
+        INNER JOIN `books` ON `cart`.`book_id` = `books`.`id` WHERE `user_id` = $this->userId";
+        
+        return $this->runDQL($sql);
+    }
     public function update() {}
     public function delete() {}
 
@@ -89,8 +97,9 @@ class Cart  extends config implements operations
     public function checkofCart($bookId, $userId, $quantity)
     {
         $sql = "SELECT * FROM `cart` WHERE `book_id` = $bookId AND `user_id` = $userId";
-        $result = $this->conn->query($sql);
-        if ($result->num_rows > 0) {
+        $result = $this->runDQL($sql);
+        // $result = $this->conn->query($sql);
+        if ($result) {
             $this->updateCart($bookId, $userId, $quantity);
         } else {
             $this->addToCart($bookId, $quantity, $userId);
@@ -99,15 +108,21 @@ class Cart  extends config implements operations
 
     public function updateCart($bookId, $userId, $quantity)
     {
-        $sql = "UPDATE `cart` SET `quantity` = $quantity + `quantity` WHERE `book_id` = $bookId AND `user_id` = $userId";
+        $sql = "UPDATE `cart` SET `quantity` = $quantity + `quantity`
+        
+         WHERE `book_id` = $bookId AND `user_id` = $userId";
         return $this->conn->query($sql);
     }
 
     public function getCartItems($userId)
     {
-        $sql = "SELECT cart.*, books.title, books.price, books.offer, books.image FROM `cart` INNER JOIN `books` ON `cart`.`book_id` = `books`.`id` WHERE `user_id` = $userId";
-        $result = $this->conn->query($sql);
-        return $result;
+        $sql = "SELECT cart.*, books.title, books.price, books.offer, books.image FROM `cart` 
+        INNER JOIN `books` ON `cart`.`book_id` = `books`.`id` WHERE `user_id` = $userId";
+        // $sql = "SELECT cart.*, books.title, books.price, books.offer, books.image FROM `cart` 
+        // INNER JOIN `books` ON `cart`.`book_id` = `books`.`id` WHERE `user_id` = $userId";
+        // $result = $this->runDQL($sql);
+        // $result = $this->conn->query($sql);
+        return $this->runDQL($sql);
     }
 
     public function removeFromCart($Id, $userId)
@@ -119,6 +134,8 @@ class Cart  extends config implements operations
     public function removeAllFromCart($userId)
     {
         $sql = "DELETE FROM `cart` WHERE `user_id` = $userId";
-        $this->conn->query($sql);
+        return $this->runDML($sql);
+
+        // $this->conn->query($sql);
     }
 }

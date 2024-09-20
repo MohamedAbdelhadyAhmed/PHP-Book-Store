@@ -12,8 +12,6 @@ if (isset($_GET['id'])) {
 } else {
   header("location:index.php");
 }
-$wishlist = new Wishlist();
-$book_in_wishlist = $wishlist->checkWishlistbyBookId($_GET['id'], ($_SESSION['user_id'] ?? 1));
 ?>
 <main>
   <!-- Product details Start -->
@@ -61,17 +59,12 @@ $book_in_wishlist = $wishlist->checkWishlistbyBookId($_GET['id'], ($_SESSION['us
         </form>
         <div class="row">
           <div class="card-footer d-flex justify-content-between bg-light border mt-3">
-            <?php if ($book_in_wishlist->num_rows > 0) : ?>
-              <a href="<?= "app/controller/FrontEnd/Book/remove_from_favourite.php?id=" . $book['id'] ?>" class="single-product__add-to-favourite primary-button w-100 text-decoration-none text-center">
-                <i class="fa-solid fa-heart text-danger"></i>
-                حذف من المفضلة
-              </a>
-            <?php else : ?>
-              <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id'] ?>" class="single-product__add-to-favourite primary-button w-100 text-decoration-none text-center">
-                <i class="fa-regular fa-heart"></i>
-                اضافة للمفضلة
-              </a>
-            <?php endif; ?>
+
+            <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id'] ?>" class="single-product__add-to-favourite primary-button w-100 text-decoration-none text-center">
+              <i class="fa-regular fa-heart"></i>
+              اضافة للمفضلة
+            </a>
+
           </div>
         </div>
       </div>
@@ -221,16 +214,11 @@ $book_in_wishlist = $wishlist->checkWishlistbyBookId($_GET['id'], ($_SESSION['us
             <?php endif; ?>
             <div
               class="product__favourite position-absolute top-0 end-0 m-1 rounded-circle d-flex justify-content-center align-items-center bg-white">
-              <?php $book_in_wishlist = $wishlist->checkWishlistbyBookId($book['id'], ($_SESSION['user_id'] ?? 1)); ?>
-              <?php if ($book_in_wishlist->num_rows > 0) : ?>
-                <a href="<?= "app/controller/FrontEnd/Book/remove_from_favourite.php?id=" . $book['id']  ?>" class="text-decoration-none text-dark">
-                  <i class="fa-solid fa-heart text-danger"></i>
-                </a>
-              <?php else : ?>
-                <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id']  ?>" class="text-decoration-none text-dark">
-                  <i class="fa-regular fa-heart"></i>
-                </a>
-              <?php endif; ?>
+
+              <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id']  ?>" class="text-decoration-none text-dark">
+                <i class="fa-regular fa-heart"></i>
+              </a>
+
             </div>
           </div>
           <br>
@@ -290,16 +278,11 @@ $book_in_wishlist = $wishlist->checkWishlistbyBookId($_GET['id'], ($_SESSION['us
             <?php endif; ?>
             <div
               class="product__favourite position-absolute top-0 end-0 m-1 rounded-circle d-flex justify-content-center align-items-center bg-white">
-              <?php $book_in_wishlist = $wishlist->checkWishlistbyBookId($book['id'], ($_SESSION['user_id'] ?? 1)); ?>
-              <?php if ($book_in_wishlist->num_rows > 0) : ?>
-                <a href="<?= "app/controller/FrontEnd/Book/remove_from_favourite.php?id=" . $book['id']  ?>" class="text-decoration-none text-dark">
-                  <i class="fa-solid fa-heart text-danger"></i>
-                </a>
-              <?php else : ?>
-                <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id']  ?>" class="text-decoration-none text-dark">
-                  <i class="fa-regular fa-heart"></i>
-                </a>
-              <?php endif; ?>
+
+              <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id']  ?>" class="text-decoration-none text-dark">
+                <i class="fa-regular fa-heart"></i>
+              </a>
+
             </div>
           </div>
           <br>
@@ -333,31 +316,6 @@ $book_in_wishlist = $wishlist->checkWishlistbyBookId($_GET['id'], ($_SESSION['us
     </div>
   </section>
   <!-- Related products End -->
-
-  <!-- Users comments Start -->
-  <section class="section-container comments mb-5">
-    <div class="d-flex gap-4 align-items-center w-100 mb-4">
-      <h5 class="m-0">أعرف اراء عملاؤنا</h5>
-      <hr class="flex-grow-1">
-    </div>
-    <div class="comments__slider owl-carousel owl-theme">
-      <div class="comments__item">
-        <div class="comments__icon">
-          <img class="w-100" src="assets/images/quote.png" alt="">
-        </div>
-        <div class="comments__text mb-3">
-          الكتاب جميل جدا
-        </div>
-        <div class="comments__author d-flex align-items-center gap-2">
-          <div class="comments__author-dash"></div>
-          <div class="comments__author-name fw-bolder">
-            Moamen Sherif
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- Users comments End -->
 </main>
 
 <?php include "layouts/footer.php" ?>

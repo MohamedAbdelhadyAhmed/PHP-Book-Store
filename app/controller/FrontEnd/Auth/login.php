@@ -29,12 +29,12 @@ if ($_POST) {
     // print_r($email_unique );die;
     if (!empty($create_user_errors)) {
         $_SESSION['login_user'] = $create_user_errors;
-        header("Location:../../../../account.php");
+        header("Location:../../../../login.php");
         die;
     } else {
 
         // store new user ;
-        $userObject = new user;
+        $userObject = new User;
         $userObject->setEmail($_POST['email']);
         $userObject->setPassword($_POST['password']);
 
@@ -43,12 +43,10 @@ if ($_POST) {
             // print_r($result );die;
             $user = $result->fetch_object();
             $_SESSION["user"] = $user ;
-            print_r(  $_SESSION["user"]);
-            die;
-            header("Location:../../../../account.php");
+            header("Location:../../../../index.php");
         } else {
             $_SESSION["user_added"] = "Somthing Went Wrong Please Try Again";
-            header("Location:../../../../account.php");
+            header("Location:../../../../login.php");
         }
     }
 }

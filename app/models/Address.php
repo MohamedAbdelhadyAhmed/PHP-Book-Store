@@ -38,7 +38,15 @@ class Address  extends config implements operations{
     public function getUpdatedAt() { return $this->updatedAt; }
     public function setUpdatedAt($updatedAt) { $this->updatedAt = $updatedAt; }
      //================================ Functions Here =====================================================
-     public  function create() {}
+     public  function create() {
+        $query = "INSERT INTO `addresses` (`state`, `street`, `user_id`) VALUES ('$this->state', '$this->street', $this->userId)";
+        $result  =   $this->conn->query($query);
+        if ($result) {
+            $last_id = $this->conn->insert_id;
+            return  $last_id;
+        }
+        return false;
+     }
      public function update() {}
      public function read() {}
      public function delete() {}

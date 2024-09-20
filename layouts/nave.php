@@ -1,11 +1,21 @@
 <?php
-require_once "app/models/Cart.php";
-require_once "app/models/Wishlist.php";
-$cart = new Cart();
-$cartItems = $cart->getCartItems($_SESSION['user']['id'] ?? 1);
+if (isset($_SESSION['user'])) {
 
-$wishlist = new Wishlist();
-$wishlistItems = $wishlist->getWishlist($_SESSION['user']['id'] ?? 1);
+  require_once "app/models/Cart.php";
+  require_once "app/models/Wishlist.php";
+  $cart = new Cart();
+  $cartItems = $cart->getCartItems($_SESSION['user']->id);
+  if ($cartItems) {
+    $cart_result = $cartItems->fetch_all(MYSQLI_ASSOC);
+  } else {
+    $cart_result = [];
+  }
+  $cartItems = count($cart_result);
+  // print_r($cartItems);die;
+
+  $wishlist = new Wishlist();
+  $wishlistItems = $wishlist->getWishlist($_SESSION['user']->id);
+}
 ?>
 <!--  nave  -->
 <nav class="nav">
@@ -27,33 +37,34 @@ $wishlistItems = $wishlist->getWishlist($_SESSION['user']['id'] ?? 1);
       </button>
     </form>
     <ul class="nav__links gap-3 list-unstyled d-none d-lg-flex m-0">
-      <!-- <li class="nav__link nav__link-user">
-              <a class="d-flex align-items-center gap-2">
-                حسابي
-                <i class="fa-regular fa-user"></i>
-                <i class="fa-solid fa-chevron-down fa-2xs"></i>
-              </a>
-              <ul class="nav__user-list position-absolute p-0 list-unstyled bg-white">
-                <li class="nav__link nav__user-link"><a href="profile.php">لوحة التحكم</a></li>
-                <li class="nav__link nav__user-link"><a href="orders.php">الطلبات</a></li>
-                <li class="nav__link nav__user-link"><a href="account_details.php">تفاصيل الحساب</a></li>
-                <li class="nav__link nav__user-link"><a href="favourites.php">المفضلة</a></li>
-                <li class="nav__link nav__user-link"><a href="">تسجيل الخروج</a></li>
-              </ul>
-            </li> -->
+  <?php if (isset($_SESSION['user'])) {?>
       <li class="nav__link">
-        <a class="d-flex align-items-center gap-2" href="account.php">
+        <a class="d-flex align-items-center gap-2" href="account_details.php">
+          Profile
+          <i class="fa-regular fa-user"></i>
+        </a>
+      </li>
+      <?php } else {?>
+        <li class="nav__link">
+        <a class="d-flex align-items-center gap-2" href="login.php">
           تسجيل الدخول
           <i class="fa-regular fa-user"></i>
         </a>
       </li>
+      <?php } ?>
+      
       <li class="nav__link">
         <a class="d-flex align-items-center gap-2" href="favourites.php">
           المفضلة
           <div class="position-relative">
             <i class="fa-regular fa-heart"></i>
             <div class="nav__link-floating-icon">
-              <?= $wishlistItems->num_rows; ?>
+            <?php if (isset($wishlistItems) && $wishlistItems->num_rows > 0) {
+                echo $wishlistItems->num_rows;
+              } else {
+                echo 0;
+              } ?>
+
             </div>
           </div>
         </a>
@@ -64,7 +75,11 @@ $wishlistItems = $wishlist->getWishlist($_SESSION['user']['id'] ?? 1);
           <div class="position-relative">
             <i class="fa-solid fa-cart-shopping"></i>
             <div class="nav__link-floating-icon">
-              <?= $cartItems->num_rows; ?>
+              <?php if (isset($cartItems)) {
+                echo $cartItems;
+              } else {
+                echo 0;
+              } ?>
             </div>
           </div>
         </a>
@@ -135,41 +150,47 @@ $wishlistItems = $wishlist->getWishlist($_SESSION['user']['id'] ?? 1);
     </button>
   </div>
   <div class="nav__categories-body offcanvas-body pt-4">
-    <?php if ($cartItems->num_rows == 0) : ?>
+    <?php if (empty($cart_result)) : ?>
       <p>سلة التسوق فارغة</p>
-    <?php else : ?>
+    <?php elseif (isset($cart_result)) : ?>
       <p>المنتجات في سلة التسوق</p>
-      <?php $total_price = 0; ?>
-      <?php while ($cart_item = mysqli_fetch_assoc($cartItems)) : ?>
-        <div class="cart-products">
-          <ul class="nav__list list-unstyled">
-            <li class="cart-products__item d-flex justify-content-between gap-2">
-              <div class="d-flex gap-2">
-                <div>
-                  <a class="cart-products__remove text-danger px-2 text-decoration-none" href="<?= "app/controller/FrontEnd/Book/remove_from_cart.php?id=" . $cart_item['id'] ?>">x</a>
+      <?php
+      $total_price = 0; ?>
+
+      <?php if (isset($cart_result)) {
+        foreach ($cart_result as $value) {   ?>
+          <div class="cart-products">
+            <ul class="nav__list list-unstyled">
+              <li class="cart-products__item d-flex justify-content-between gap-2">
+                <div class="d-flex gap-2">
+                  <div>
+                    <a class="cart-products__remove text-danger px-2 text-decoration-none" href="<?= "app/controller/FrontEnd/Book/remove_from_cart.php?id=" . $value['id'] ?>">x</a>
+                  </div>
+                  <div>
+                    <p class="cart-products__name m-0 fw-bolder"><a href="<?= "single-product.php?id=" . $value['book_id'] ?>" class="text-decoration-none text-dark"><?= $value['title'] ?></a></p>
+                    <?php if ($value['offer'] > 0) : ?>
+                      <span class="cart-products__price product__price--old m-0"><?= "$" . $value['price'] ?></span>
+                      <span class="cart-products__price m-0">price : <?= "$" . $price_after_offer = $value['price'] - ($value['price'] * ($value['offer'] / 100)) ?></span>
+                    <?php else : ?>
+                      <p class="cart-products__price m-0">price : <?= "$" . $price_after_offer = $value['price'] ?></p>
+                    <?php endif; ?>
+                    <p class="cart-products__price m-0">quantity :<?= $value['quantity'] ?></p>
+                    <p class="cart-products__price m-0">total price :<?= "$" . $price = $price_after_offer * $value['quantity'] ?></p>
+                  </div>
                 </div>
-                <div>
-                  <p class="cart-products__name m-0 fw-bolder"><a href="<?= "../single-product.php?id=" . $cart_item['book_id'] ?>" class="text-decoration-none text-dark"><?= $cart_item['title'] ?></a></p>
-                  <?php if ($cart_item['offer'] > 0) : ?>
-                    <span class="cart-products__price product__price--old m-0"><?= "$" . $cart_item['price'] ?></span>
-                    <span class="cart-products__price m-0">price : <?= "$" . $price_after_offer = $cart_item['price'] - ($cart_item['price'] * ($cart_item['offer'] / 100)) ?></span>
-                  <?php else : ?>
-                    <p class="cart-products__price m-0">price : <?= "$" . $price_after_offer = $cart_item['price'] ?></p>
-                  <?php endif; ?>
-                  <p class="cart-products__price m-0">quantity :<?= $cart_item['quantity'] ?></p>
-                  <p class="cart-products__price m-0">total price :<?= "$" . $price = $price_after_offer * $cart_item['quantity'] ?></p>
+                <div class="cart-products__img">
+                  <a href="<?= "../single-product.php?id=" . $value['book_id'] ?>" class="text-decoration-none">
+                    <img class="w-100" src="<?= "Public/assets/Images/Books/" . $value['image'] ?>" alt="<?= $value['title'] ?>">
+                  </a>
                 </div>
-              </div>
-              <div class="cart-products__img">
-                <a href="<?= "../single-product.php?id=" . $cart_item['book_id'] ?>" class="text-decoration-none">
-                  <img class="w-100" src="<?= "Public/assets/Images/Books/" . $cart_item['image'] ?>" alt="<?= $cart_item['title'] ?>">
-                </a>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <?php $total_price += $price; ?>
-      <?php endwhile; ?>
+              </li>
+            </ul>
+          </div>
+          <?php $total_price += $price; ?>
+      <?php  }
+      } ?>
+      <!-- <?php //endwhile; 
+            ?> -->
       <div class="d-flex justify-content-between">
         <p class="fw-bolder">المجموع:</p>
         <p><?= "$" . $total_price ?></p>

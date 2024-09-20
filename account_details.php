@@ -1,6 +1,10 @@
-<?php include "layouts/header.php" ?>
-<?php include "layouts/nave.php" ?>
-<?php include "app/models/Book.php" ?>
+<?php
+session_start();
+include "app/middleware/auth _user.php";
+include "layouts/header.php";
+include "layouts/nave.php";
+
+?>
 
 <main>
   <section
@@ -49,7 +53,7 @@
             href="favourites.php">المفضلة</a>
         </li>
         <li class="profile__tab">
-          <a class="py-2 px-3 text-black text-decoration-none" href="">تسجيل الخروج</a>
+          <a class="py-2 px-3 text-black text-decoration-none" href="./app/controller/FrontEnd/Auth/logout.php">تسجيل الخروج</a>
         </li>
       </ul>
     </div>
@@ -61,30 +65,39 @@
               <label class="fw-bold mb-2" for="first-name">
                 الاسم الاول <span class="required">*</span>
               </label>
-              <input type="text" class="form__input" id="first-name" />
+              <input type="text" class="form__input" id="first-name"
+                value="<?= $_SESSION['user']->first_name ?>" />
             </div>
             <div class="w-100">
               <label class="fw-bold mb-2" for="last-name">
                 الاسم الأخير <span class="required">*</span>
               </label>
-              <input type="text" class="form__input" id="last-name" />
+              <input type="text" class="form__input" id="last-name"
+                value="<?= $_SESSION['user']->last_name ?>" />
             </div>
           </div>
           <div class="w-100">
             <label class="fw-bold mb-2" for="displayed-name">
-              أسم العرض<span class="required">*</span>
+              رقم الهاتف <span class="required">*</span>
             </label>
-            <input type="text" class="form__input" id="displayed-name" />
+            <input type="text" class="form__input" id="displayed-name"
+              value="<?= $_SESSION['user']->phone ?>" />
           </div>
           <div class="w-100 mb-3">
             <label class="fw-bold mb-2" for="email">
               البريد الالكتروني<span class="required">*</span>
             </label>
-            <input type="text" class="form__input" id="email" />
+            <input type="text" class="form__input" id="email"
+              value="<?= $_SESSION['user']->email ?>" />
           </div>
-          <button class="primary-button">تعديل</button>
+          <!-- <button class="primary-button">تعديل</button> -->
         </form>
-        <form>
+        <?php
+              if (isset($_SESSION['user_password_updated'])) {
+                echo "<div class='alert alert-success'>" . $_SESSION['user_password_updated'] . "</div>";
+              }
+              ?>
+        <form class="mb-5" action="./app/controller/FrontEnd/Auth/change_password.php" method="POST">
           <fieldset>
             <legend class="fw-bolder">تغيير كلمة المرور</legend>
             <div class="w-100 mb-3">
@@ -92,20 +105,35 @@
                 كلمة المرور الحالية (اترك الحقل فارغاً إذا كنت لا تودّ
                 تغييرها)
               </label>
-              <input type="text" class="form__input" id="curr-password" />
+              <input type="password" name="password" class="form__input" id="curr-password" />
+              <?php
+              if (isset($_SESSION['password_user']['password'])) {
+                echo "<div class='alert alert-danger'>" . $_SESSION['password_user']['password'] . "</div>";
+              }
+              ?>
             </div>
             <div class="w-100 mb-3">
               <label class="fw-bold mb-2" for="curr-password">
                 كلمة المرور الجديدة (اترك الحقل فارغاً إذا كنت لا تودّ
                 تغييرها)
               </label>
-              <input type="text" class="form__input" id="curr-password" />
+              <input type="password" name="new_password" class="form__input" id="curr-password" />
+              <?php
+              if (isset($_SESSION['password_user']['new_password'])) {
+                echo "<div class='alert alert-danger'>" . $_SESSION['password_user']['new_password'] . "</div>";
+              }
+              ?>
             </div>
             <div class="w-100 mb-3">
               <label class="fw-bold mb-2" for="curr-password">
                 تأكيد كلمة المرور الجديدة
               </label>
-              <input type="text" class="form__input" id="curr-password" />
+              <input type="password" name="password_confirmation" class="form__input" id="curr-password" />
+              <?php
+              if (isset($_SESSION['password_user']['password_confirmation'])) {
+                echo "<div class='alert alert-danger'>" . $_SESSION['password_user']['password_confirmation'] . "</div>";
+              }
+              ?>
             </div>
             <button class="primary-button">تغيير كلمة المرور</button>
           </fieldset>
@@ -114,4 +142,7 @@
     </div>
   </section>
 </main>
-<?php include "layouts/footer.php" ?>
+<?php 
+unset($_SESSION['user_password_updated']);
+unset($_SESSION['password_user']);
+include "layouts/footer.php" ?>

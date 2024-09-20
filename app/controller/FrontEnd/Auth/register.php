@@ -47,18 +47,18 @@ if ($_POST) {
     // print_r($email_unique );die;
     if (!empty($create_user_errors)) {
         $_SESSION['create_user'] = $create_user_errors;
-        header("Location:../../../../account.php");
+        header("Location:../../../../register.php");
         die;
     } else {
 
         if (!empty($email_unique)) {
             $_SESSION['email_unique']['email'] = $email_unique;
-            header("Location:../../../../account.php");
+            header("Location:../../../../register.php");
             die;
         }
         if (!empty($phone_unique)) {
             $_SESSION['email_unique']['phone'] = $phone_unique;
-            header("Location:../../../../account.php");
+            header("Location:../../../../register.php");
             die;
         }
 
@@ -76,10 +76,10 @@ if ($_POST) {
 
         if ($result) {
             $_SESSION["user_added"] = "user Register Successfully";
-            header("Location:../../../../account.php");
+            header("Location:../../../../login.php");
         } else {
             $_SESSION["user_added"] = "Somthing Went Wrong Please Try Again";
-            header("Location:../../../../account.php");
+            header("Location:../../../../login.php");
         }
     }
 }

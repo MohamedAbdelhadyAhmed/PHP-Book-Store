@@ -1,16 +1,17 @@
 <?php
 session_start();
+include "app/middleware/auth_user.php";
 include "layouts/header.php";
 include "layouts/nave.php";
 include "app/models/order.php";
 include "app/models/OrderItem.php";
-
 if (isset($_GET['id'])) {
   $Oredr_Item = new OrderItem();
-  $items = $Oredr_Item->GetOrderItems($_GET['id'], ($_SESSION['user']['id'] ?? 1));
+  $items = $Oredr_Item->GetOrderItems($_GET['id'], ($_SESSION['user']->id));
+  
   $order = new Order();
-  $user = $order->GetOrderAddress($_GET['id'], ($_SESSION['user']['id'] ?? 1));
-  $orders = $order->GetOrder($_GET['id'], ($_SESSION['user']['id'] ?? 1));
+  $user = $order->GetOrderAddress($_GET['id'], ($_SESSION['user']->id));
+  $orders = $order->GetOrder($_GET['id'], ($_SESSION['user']->id));
 } else {
   echo "<script>window.history.back()</script>";
   die;

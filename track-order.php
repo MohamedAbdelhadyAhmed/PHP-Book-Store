@@ -1,7 +1,10 @@
 <?php
 session_start();
+include "app/middleware/auth_user.php";
 include "layouts/header.php";
 include "layouts/nave.php";
+ 
+
 ?>
 
 <main>

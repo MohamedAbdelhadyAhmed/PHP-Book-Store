@@ -6,7 +6,7 @@ class config
     private $servername = "localhost";
     private $username = "root";
     private $password = "";
-    private $database_name = "book_store2";
+    private $database_name = "book_storev1";
     public $conn;
 
     public function __construct()

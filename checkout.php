@@ -1,19 +1,26 @@
 <?php
+session_start();
+// print_r($_SESSION['user'] );die;
+include "app/middleware/auth_user.php";
 include "layouts/header.php";
 include "layouts/nave.php";
 include "app/models/Book.php";
+// include "app/models/Cart.php";
+
 $cart = new Cart();
-$cartItems = $cart->getCartItems($_SESSION['user']['id'] ?? 1);
+$cartItems = $cart->getCartItems($_SESSION['user']->id);
+// print_r($_SESSION['user']);die;
 if (isset($_GET['total_price'])) {
   $total_price = $_GET['total_price'];
 } else {
   header("Location: index.php");
 }
-$user_id = ($_SESSION['user']['id'] ?? 1);
-$conn = mysqli_connect("localhost", "root", "", "book_store2");
-$sql = "SELECT `users`.*, `addresses`.`city`, `addresses`.`state`, `addresses`.`street`, `addresses`.`id` AS `address_id` FROM `users` INNER JOIN `addresses` ON `users`.`id` = `addresses`.`user_id` WHERE `users`.`id` = $user_id";
-$result = mysqli_query($conn, $sql);
-$user = mysqli_fetch_assoc($result);
+
+// $user_id = ($_SESSION['user']->id );
+// $conn = mysqli_connect("localhost", "root", "", "book_store2");
+// $sql = "SELECT `users`.*, `addresses`.`city`, `addresses`.`state`, `addresses`.`street`, `addresses`.`id` AS `address_id` FROM `users` INNER JOIN `addresses` ON `users`.`id` = `addresses`.`user_id` WHERE `users`.`id` = $user_id";
+// $result = mysqli_query($conn, $sql);
+// $user = mysqli_fetch_assoc($result);
 ?>
 
 <main>
@@ -33,15 +40,18 @@ $user = mysqli_fetch_assoc($result);
   <section class="section-container my-5 py-5 d-lg-flex">
     <div class="checkout__form-cont w-50 px-3 mb-5">
       <h4>الفاتورة </h4>
-      <form class="checkout__form" action="<?= "app/controller/FrontEnd/Order/add.php?user_id=" . $user_id . "&address_id=" . $user['address_id'] . "&total=" . ($total_price + 10) ?>" method="POST">
+      <form class="checkout__form" action="app/controller/FrontEnd/Order/add.php" method="POST">
         <div class="d-flex gap-3 mb-3">
           <div class="w-50">
             <label for="first_name">الاسم الأول <span class="required">*</span></label>
-            <input class="form__input text-dark" type="name" name="first_name" id="first_name" value="<?= $user['first_name'] ?>" required />
-          </div>
+            <input class="form__input text-dark" type="name" name="first_name" id="first_name"
+             value="<?= $_SESSION['user']->first_name?>" required />
+          <input type="hidden" name="total_price" value="<?php echo $total_price; ?>">
+            </div>
           <div class="w-50">
             <label for="last_name">الاسم الأخير <span class="required">*</span></label>
-            <input class="form__input text-dark" type="name" name="last_name" id="last_name" value="<?= $user['last_name'] ?>" required />
+            <input class="form__input text-dark" type="name" name="last_name" id="last_name"
+             value="<?= $_SESSION['user']->last_name ?>" required />
           </div>
         </div>
         <div class="mb-3">
@@ -51,25 +61,38 @@ $user = mysqli_fetch_assoc($result);
             placeholder="المدينة / المحافظة"
             type="text"
             name="state"
-            id="state" value="<?= $user['state'] ?>" required />
+            id="state"   required />
         </div>
+      
         <div class="mb-3">
-          <label for="street">العنوان بالكامل ( المنطقة -الشارع - رقم المنزل)<span
+          <label for="street">  ( المنطقة  )<span
               class="required">*</span></label>
           <input
             class="form__input text-dark"
-            placeholder="رقم المنزل او الشارع / الحي"
+            placeholder=" المنطقة"
+            type="text"
+            name="city"
+            id="street"   required />
+        </div>
+        <div class="mb-3">
+          <label for="street">  ( الشارع  )<span
+              class="required">*</span></label>
+          <input
+            class="form__input text-dark"
+            placeholder=" المنطقة"
             type="text"
             name="street"
-            id="street" value="<?= $user['street'] ?>" required />
+            id="street"   required />
         </div>
         <div class="mb-3">
           <label for="phone">رقم الهاتف<span class="required">*</span></label>
-          <input class="form__input text-dark" type="number" name="phone" id="phone" value="<?= $user['phone'] ?>" required />
+          <input class="form__input text-dark" type="number" name="phone" id="phone" 
+          value="<?=$_SESSION['user']->phone ?>" required />
         </div>
         <div class="mb-3">
           <label for="email">البريد الإلكتروني (اختياري)<span class="required">*</span></label>
-          <input class="form__input text-dark" type="email" name="email" id="email" value="<?= $user['email'] ?>" required />
+          <input class="form__input text-dark" type="email" name="email" id="email"
+           value="<?= $_SESSION['user']->email ?>" required />
         </div>
         <div class="mb-3">
           <h2>معلومات اضافية</h2>
@@ -78,7 +101,7 @@ $user = mysqli_fetch_assoc($result);
             class="form__input text-dark"
             placeholder="ملاحظات حول الطلب, مثال: ملحوظة خاصة بتسليم الطلب."
             type="text"
-            name="notes"
+            name="not"
             id="notes"></textarea>
         </div>
         <button class="primary-button w-100 py-2" type="submit">تاكيد الطلب</button>

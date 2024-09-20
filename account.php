@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+// include "app/middleware/auth.php";
 include "layouts/header.php";
 include "layouts/nave.php"; ?>
 

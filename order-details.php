@@ -1,26 +1,27 @@
 <?php
 session_start();
+include "app/middleware/auth_user.php";
 include "layouts/header.php";
 include "layouts/nave.php";
 include "app/models/order.php";
 include "app/models/OrderItem.php";
 $Oredr_Item = new OrderItem();
 if (isset($_POST['id']) && isset($_POST['email'])) {
-  $items = $Oredr_Item->GetOrderItemsbyEmail($_POST['id'], ($_SESSION['user']['id'] ?? 1), $_POST['email']);
+  $items = $Oredr_Item->GetOrderItemsbyEmail($_POST['id'], $_SESSION['user']->id, $_POST['email']);
   if ($items->num_rows == 0) {
     $_SESSION['errors']['orders'] = "لا يوجد بيانات لهذا الطلب";
     echo "<script>window.history.back()</script>";
     die;
   }
 } elseif (isset($_GET['id'])) {
-  $items = $Oredr_Item->GetOrderItems($_GET['id'], ($_SESSION['user']['id'] ?? 1));
+  $items = $Oredr_Item->GetOrderItems($_GET['id'], $_SESSION['user']->id);
 } else {
   echo "<script>window.history.back()</script>";
   die;
 }
 $order = new Order();
-$user = $order->GetOrderAddress($_GET['id'], ($_SESSION['user']['id'] ?? 1));
-$orders = $order->GetOrder($_GET['id'], ($_SESSION['user']['id'] ?? 1));
+$user = $order->GetOrderAddress($_GET['id'], $_SESSION['user']->id);
+$orders = $order->GetOrder($_GET['id'], $_SESSION['user']->id);
 ?>
 
 <main>
@@ -42,7 +43,8 @@ $orders = $order->GetOrder($_GET['id'], ($_SESSION['user']['id'] ?? 1));
   <section class="section-container my-5 py-5">
     <div class="container" dir="rtl">
       <?php
-      $shipment_status = $order->shipment_status($_GET['id'], ($_SESSION['user']['id'] ?? 1));
+      $shipment_status = $order->shipment_status($_GET['id'], $_SESSION['user']->id);
+
       $progress_percentage = 0;
       list($shipment_status, $progress_percentage) = $order->GetShipmentStatus($shipment_status, $progress_percentage);
       $is_step_1_complete = $progress_percentage >= 25;

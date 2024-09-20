@@ -1,6 +1,10 @@
+<?php session_start();
+include "app/middleware/auth_user.php";?>
 <?php include "layouts/header.php" ?>
 <?php include "layouts/nave.php" ?>
-<?php include "app/models/Book.php" ?>
+<?php include "app/models/Book.php" ;
+
+?>
 
 <main>
   <section
@@ -23,7 +27,7 @@
         <div class="profile__user-img rounded-circle overflow-hidden">
           <img class="w-100" src="assets/images/user.png" alt="" />
         </div>
-        <div class="profile__user-name">moamenyt</div>
+        <div class="profile__user-name"><?= $_SESSION['user']->first_name . " ". $_SESSION['user']->last_name  ?></div>
       </div>
       <ul class="profile__tabs list-unstyled ps-3">
         <li class="profile__tab active">
@@ -46,9 +50,8 @@
     <div class="profile__left mt-4 mt-md-0 w-100">
       <div class="profile__tab-content active">
         <p class="mb-5">
-          مرحبا <span class="fw-bolder">moamenyt</span> (لست
-          <span class="fw-bolder">moamenyt</span>?
-          <a class="text-danger" href="">تسجيل الخروج</a>)
+          مرحبا <span class="fw-bolder"><?= $_SESSION['user']->first_name ?> 
+         ( <a class="text-danger" href="./app/controller/FrontEnd/Auth/logout.php">تسجيل الخروج</a>)
         </p>
 
         <p>

@@ -153,6 +153,25 @@ class User extends config implements operations
         $query = "SELECT * FROM users WHERE email = '$this->email' AND password = '$this->password'";
         return $this->runDQL($query);
     }
+
+    public function updatePassword($old_Password)
+    {
+        $query = "SELECT password FROM users WHERE id = $this->id";
+        $result =  $this->runDQL($query);
+        $p = $result->fetch_object();
+        // print_r($p->password);
+        // echo "<br>";
+        // print_r(sha1($old_Password));
+        // die;
+
+        if ($p->password === (sha1($old_Password))) {
+
+            $query = "UPDATE `admins` SET password = '$this->password' WHERE id = '$this->id' ";
+            return $this->runDML($query);
+        } else {
+            return false;
+        }
+    }
     public function update() {}
     public function read() {}
     public function delete() {}

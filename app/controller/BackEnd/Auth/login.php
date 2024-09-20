@@ -43,7 +43,7 @@ if ($_POST) {
             // print_r($result );die;
             $admin = $result->fetch_object();
             $_SESSION["admin"] = $admin ;
-            header("Location:../../../../admin/login.php");
+            header("Location:../../../../admin/index.php");
         } else {
             $_SESSION["admin_added"] = "Somthing Went Wrong Please Try Again";
             header("Location:../../../../admin/login.php");

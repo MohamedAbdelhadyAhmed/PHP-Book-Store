@@ -1,10 +1,17 @@
 <?php
 session_start();
+include "app/middleware/auth_user.php";
 include "layouts/header.php";
-include "layouts/nave.php";
+ include "layouts/nave.php";
 include "app/models/Book.php";
-$wishlist = new Wishlist();
-$wishlistItems = $wishlist->getWishlist($_SESSION['user']['id'] ?? 1);
+
+
+if (isset($_SESSION['user'])) {
+  // print_r($_SESSION['user']);die;
+
+  $wishlistItems = $wishlist->getWishlist($_SESSION['user']->id);
+}
+
 ?>
 
 <main>

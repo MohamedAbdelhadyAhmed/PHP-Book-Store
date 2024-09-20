@@ -5,6 +5,6 @@ require_once __DIR__ . "/../../../models/Wishlist.php";
 
 $id = $_GET['id'];
 $wishlist = new Wishlist();
-$wishlist->removeFromWishlist($id, ($_SESSION['user']['id'] ?? 1));
+$wishlist->removeFromWishlist($id, ($_SESSION['user']->id));
 $_SESSION['wishlist']['remove'] = "removed from wishlist successfully";
 echo "<script>window.history.back()</script>";
