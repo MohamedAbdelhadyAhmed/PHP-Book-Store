@@ -20,7 +20,7 @@ if (isset($_GET['lang'])) {
 } else {
   $books = $bookObject->GetBooks();
 }
-$wishlist = new Wishlist();
+// $wishlist = new Wishlist();
 ?>
 <main>
   <div
@@ -87,16 +87,11 @@ $wishlist = new Wishlist();
               <?php endif; ?>
               <div
                 class="product__favourite position-absolute top-0 end-0 m-1 rounded-circle d-flex justify-content-center align-items-center bg-white">
-                <?php $book_in_wishlist = $wishlist->checkWishlistbyBookId($book['id'], ($_SESSION['user_id'] ?? 1)); ?>
-                <?php if ($book_in_wishlist->num_rows > 0) : ?>
-                  <a href="<?= "app/controller/FrontEnd/Book/remove_from_favourite.php?id=" . $book['id'] ?>" class="text-decoration-none text-dark">
-                    <i class="fa-solid fa-heart text-danger"></i>
-                  </a>
-                <?php else : ?>
-                  <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id'] ?>" class="text-decoration-none text-dark">
-                    <i class="fa-regular fa-heart text-dark"></i>
-                  </a>
-                <?php endif; ?>
+
+                <a href="<?= "app/controller/FrontEnd/Book/add_to_favourite.php?id=" . $book['id'] ?>" class="text-decoration-none text-dark">
+                  <i class="fa-regular fa-heart text-dark"></i>
+                </a>
+
               </div>
             </div>
             <br>
@@ -130,15 +125,7 @@ $wishlist = new Wishlist();
           </div>
         <?php endwhile; ?>
       </div>
-      <!-- <div
-        class="products__pagination mb-5 d-flex justify-content-center gap-2">
-        <span class="pagination__btn rounded-1 pagination__btn--next"><i class="fa-solid fa-arrow-right-long"></i></span>
-        <span class="pagination__btn rounded-1 active">1</span>
-        <span class="pagination__btn rounded-1">2</span>
-        <span class="pagination__btn rounded-1">3</span>
-        <span class="pagination__btn rounded-1">4</span>
-        <span class="pagination__btn rounded-1 pagination__btn--prev"><i class="fa-solid fa-arrow-left-long"></i></span>
-      </div> -->
+
     </div>
   </div>
 </main>
