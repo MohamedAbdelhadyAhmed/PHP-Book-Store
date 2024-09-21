@@ -166,6 +166,17 @@ class Book  extends config implements operations
     $sql = "UPDATE `books` SET `top_selling` = `top_selling` + 1 WHERE `id` = '$this->id'";
     mysqli_query($this->conn, $sql);
   }
+  public function updateBook()
+  {
+    $sql = "UPDATE `books` SET 
+    `id`='$this->id',`title`='$this->title',
+    `description`='$this->description',`price`='$this->price',
+    `offer`='$this->offer' ,
+    `number_of_pages`='$this->numberOfPages',`lang`='$this->lang',
+   `author_id`='$this->authorId',`category_id`='$this->category_id',
+   `publisher_id`='$this->publisherId'  WHERE `id` = '$this->id'";
+    return $this->runDML( $sql);
+  }
   public function read()
   {
     // $sql  = "SELECT * FROM `books`";
@@ -258,7 +269,12 @@ class Book  extends config implements operations
 
   public function GetBookById($id)
   {
-    $query = "SELECT books.*, authors.name AS author_name, categories.name AS category_name, publishers.name AS publisher_name FROM books INNER JOIN authors ON books.author_id = authors.id INNER JOIN categories ON books.category_id = categories.id INNER JOIN publishers ON books.publisher_id = publishers.id WHERE books.id = $id";
+    $query = "SELECT books.*, authors.name AS author_name, categories.name 
+    AS category_name, publishers.name AS publisher_name 
+    FROM books INNER JOIN authors ON books.author_id = authors.id 
+    INNER JOIN categories ON books.category_id = categories.id 
+    INNER JOIN publishers ON books.publisher_id = publishers.id 
+    WHERE books.id = $id";
     $result = $this->conn->query($query);
     return mysqli_fetch_assoc($result);
   }

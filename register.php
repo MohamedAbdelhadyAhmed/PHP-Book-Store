@@ -21,6 +21,15 @@ include "layouts/nave.php";
       </div>
     </div>
   </div>
+  <?php
+        if (isset(  $_SESSION['email_unique']['email'])) {
+          echo "<div class='alert alert-danger'>" .   $_SESSION['email_unique']['email'] . "</div>";
+        }
+        if (isset($_SESSION['email_unique']['phone']) ){
+          echo "<div class='alert alert-danger'>" .   $_SESSION['email_unique']['phone'] . "</div>";
+        }
+        ?>
+
 
   <div class="page-full pb-5">
     <div class="account account--register mt-5 pt-5">
@@ -32,6 +41,7 @@ include "layouts/nave.php";
             echo "<div class='alert alert-danger'>" . $_SESSION['create_user']['firstname'] . "</div>";
           }
           ?>
+
           <div class="input-group rounded-1 mb-3">
             <input type="text" name="firstname" class="form-control p-3" placeholder="الاسم الاول" aria-label="firstname" />
             <span class="input-group-text login__input-icon"><i class="fa-solid fa-user"></i></span>
@@ -102,5 +112,6 @@ include "layouts/nave.php";
 
 <?php
 unset($_SESSION['create_user']);
+unset($_SESSION['email_unique']);
 include "layouts/footer.php";
 ?>

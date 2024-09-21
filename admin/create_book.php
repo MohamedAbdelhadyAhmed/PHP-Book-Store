@@ -118,6 +118,16 @@ if ($result) {
                   }
                   ?>
                 </div>
+                <div class="form-group">
+                  <label for="lang">Language </label>
+                  <input type="text" class="form-control" id="lang"
+                    name="lang" placeholder="Enter  Language">
+                    <?php
+                  if (isset($_SESSION['add_book']['lang'])) {
+                    echo "<div class='alert alert-danger'>" . $_SESSION['add_book']['lang'] . "</div>";
+                  }
+                  ?>
+                  </div>
 
 
 
